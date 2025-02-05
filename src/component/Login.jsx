@@ -134,7 +134,7 @@ export const Login = () => {
 
         {
             loginfrom ?
-            <form onSubmit={handleLoginSubmit}  className='outline-none flex flex-col gap-8 rounded-lg absolute top-[25%] left-[5%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[300px] md:w-[400px] p-5 items-center shadow-2xl'>
+            <form onSubmit={handleLoginSubmit}  className='outline-none flex flex-col gap-8 rounded-lg absolute top-[25%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'>
                 <p className='text-slate-900 text-3xl animate-bounce'>Hey, Welcome back </p>
 
             <div className='w-full relative'>
@@ -157,7 +157,7 @@ export const Login = () => {
 
         :
 
-        <form onSubmit={handelAccountDetails} className='flex flex-col gap-8 rounded-lg absolute top-[20%] left-[5%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%] w-[300px] md:w-[400px] p-5 items-center shadow-2xl'>
+        <form onSubmit={handelAccountDetails} className='flex flex-col gap-8 rounded-lg absolute top-[20%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%] w-[320px] md:w-[400px] p-5 items-center shadow-2xl'>
 
             <p className='text-slate-900 text-3xl animate-bounce'>Create Account</p>
             <input type="text" name='fullName' placeholder='Enter fullname' value={accountDetails.fullName} onChange={handelAccountDetailsInput} required className='text-white text-md h-10 w-full pl-5 rounded outline-none ring hover:ring-slate-400' />
