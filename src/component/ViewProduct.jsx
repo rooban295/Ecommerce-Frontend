@@ -117,7 +117,7 @@ export const ViewProduct = ({productId}) => {
                <div className='text-xl flex flex-col gap-5 p-3'>
                <h1 className='text-xl'><span className=''></span>{product.productName}</h1>
                <p className='text-sm'>{product.description}</p>
-               <p><span className='font-bold'>price </span> ${product.productPrice}</p>
+               <p><span className='font-bold'>price </span> ₹{product.productPrice}</p>
 
 
                <div className='flex gap-2 text-white'>

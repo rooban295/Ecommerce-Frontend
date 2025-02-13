@@ -107,15 +107,15 @@ export const Product = () => {
         {
             product.filter((item)=>categoryId > 0 ? item.category.id===categoryId : item).map((item,index)=>(
 
-                <div className='rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5' key={index}>
-                <div onClick={()=>{handelProductClick(item.id)}} className=' mt-0 px-4 flex flex-col gap-5 items-center '>  
+                <div className='rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5 cursor-pointer' key={index}>
+                <div className=' mt-0 px-4 flex flex-col gap-5 items-center '>  
                     
-                    <img src={`https://drive.google.com/thumbnail?id=${imageUrl(item.productImg)}`} alt={item.name} className='mt-5 h-[180px] sm:h-[200px]'/>
+                    <img  onClick={()=>{handelProductClick(item.id)}} src={`https://drive.google.com/thumbnail?id=${imageUrl(item.productImg)}`} alt={item.name} className='mt-5 h-[180px] sm:h-[200px]'/>
 
                     <div className='flex flex-col gap-2 sm:gap-5 items-start '>
                     <h1 className='text-slate-700'>{item.productName}</h1>
                     <p className='text-justify'>{item.description}</p>
-                    <h1 className='font-bold'><span>$</span>{item.productPrice}</h1>
+                    <h1 className='font-bold'><span>₹</span>{item.productPrice}</h1>
                     <button  className=' bg-slate-400 rounded-lg p-1 px-3 my-5 hover:bg-slate-600' onClick={()=>{handelCartButton(item.id)}}>Add to cart</button>
                     </div>
                 </div>  

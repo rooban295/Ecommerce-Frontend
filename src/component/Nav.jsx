@@ -174,7 +174,7 @@ export const Nav = () => {
                 <div className=''>
                 <div className='flex relative'>
                 <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-slate-500 hover:ring-2 pl-2 rounded-lg p-1 w-[200px] sm:w-[300px] md:w-[350px] mr-2 border-r-none'  placeholder='Search Product'/>
-                <IoSearchOutline className='h-6 w-7 absolute right-4 top-1 text-slate-400 hover:text-slate-600 ' onClick={handelSearchList}/>
+                <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-4 top-1 text-slate-400 hover:text-slate-600 ' onClick={handelSearchList}/>
                 </div>
                 {
                     dropDownsearch && (

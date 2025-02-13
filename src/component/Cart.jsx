@@ -204,7 +204,7 @@ const handelCartPlaceOrder=()=>{
               <div className='flex flex-col gap-1 p-2'>
                 <p className=''>{item.product ? item.product.productName :''}</p>
                 <div className='flex gap-4'>
-                <p className='font-bold'>${item.cartItemTotal}</p>
+                <p className='font-bold'>₹{item.cartItemTotal}</p>
 
                 <span>
 
@@ -229,7 +229,7 @@ const handelCartPlaceOrder=()=>{
         {
         <div className=' p-1 rounded-md bg-slate-200 shadow-2xl px-7 py-7'>
         <h1 className='text-center font-bold'>Price details</h1>
-        <p className='mt-5'><span className='font-bold'>Total Amount : $</span> {cart.cartTotal}</p>
+        <p className='mt-5'><span className='font-bold'>Total Amount : ₹</span> {cart.cartTotal}</p>
         <button onClick={handelCartPlaceOrder} className='p-1 mt-2 rounded-sm bg-slate-500 hover:bg-slate-700 text-white '>Place Order</button>
         </div>
         }
