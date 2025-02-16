@@ -10,6 +10,8 @@ import { IoLocationOutline } from "react-icons/io5";
 
 export const Order = () => {
 
+const baseUrl=import.meta.env.VITE_BASE_URL;
+
 const jwt =useSelector((state)=>state.jwt.jwtToken);
 
 const[cartitem,setCartItems]=useState([])
@@ -41,7 +43,7 @@ const[cartItem,setCartItem]=useState({ //for cart update
 
         const userInfo=()=>{
           if(jwt.message ==='Login successfully'){
-            axios.get('http://localhost:8080/userinfo',{
+            axios.get(`${baseUrl}/userinfo`,{
                 headers:{
                     Authorization: `Bearer ${jwt.jwt}`
                 }
@@ -60,7 +62,7 @@ const[cartItem,setCartItem]=useState({ //for cart update
   //cart price details
   const cardPriceDetais=()=>{
     if(jwt.message ==='Login successfully'){
-      axios.get('http://localhost:8080/api/cart',{
+      axios.get(`${baseUrl}/api/cart`,{
         headers:{
           Authorization: `Bearer ${jwt.jwt}`
         }
@@ -80,7 +82,7 @@ const[cartItem,setCartItem]=useState({ //for cart update
   //getting all the item in cart
   const fetchAllItem=()=>{
     if(jwt.message ==='Login successfully'){
-      axios.get('http://localhost:8080/api/cart/getcartitem',{
+      axios.get(`${baseUrl}/api/cart/getcartitem`,{
         headers:{
           Authorization: `Bearer ${jwt.jwt}`
         }
@@ -100,7 +102,7 @@ const[cartItem,setCartItem]=useState({ //for cart update
   // updating cart
 const updatingCart=(c)=>{
   if(c){
-    axios.put(`http://localhost:8080/api/cart/update`,c,{
+    axios.put(`${baseUrl}/api/cart/update`,c,{
      headers:{
        Authorization: `Bearer ${jwt.jwt}` 
      }
@@ -140,7 +142,7 @@ const updatingCart=(c)=>{
 //remove item form the cart
 const removeOrderItem=(id)=>{
   if(id){
-    axios.delete(`http://localhost:8080/api/cart/deletecartitem/${id}`,{
+    axios.delete(`${baseUrl}/api/cart/deletecartitem/${id}`,{
       headers:{
         Authorization: `Bearer ${jwt.jwt}` 
       }
@@ -196,7 +198,7 @@ const removeOrderItem=(id)=>{
 
   
   const orderApi=()=>{
-    axios.post('http://localhost:8080/api/order/placeorder',{address},{
+    axios.post(`${baseUrl}/api/order/placeorder`,{address},{
       headers:{
         Authorization: `Bearer ${jwt.jwt}`
       }

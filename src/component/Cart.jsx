@@ -7,6 +7,8 @@ import { SlCheck } from "react-icons/sl";
 
 export const Cart = () => {
 
+  const baseUrl=import.meta.env.VITE_BASE_URL;
+
   const jwt =useSelector((state)=>state.jwt.jwtToken);
   
   const[cart , setCart]=useState({});
@@ -42,7 +44,7 @@ export const Cart = () => {
   //cart price details
  const cartPrice=()=>{
     if(jwt.message ==='Login successfully'){
-    axios.get('http://localhost:8080/api/cart',{
+    axios.get(`${baseUrl}/api/cart`,{
       headers:{
         Authorization: `Bearer ${jwt.jwt}`
       }
@@ -63,7 +65,7 @@ export const Cart = () => {
 
     if(jwt.message ==='Login successfully'){
       
-    axios.get('http://localhost:8080/api/cart/getcartitem',{
+    axios.get(`${baseUrl}/api/cart/getcartitem`,{
       headers:{
         Authorization: `Bearer ${jwt.jwt}`
       }
@@ -98,7 +100,7 @@ const removeCartItem=(id)=>{
 
   if(id != null){
 
-    axios.delete(`http://localhost:8080/api/cart/deletecartitem/${id}`,{
+    axios.delete(`${baseUrl}/api/cart/deletecartitem/${id}`,{
       headers:{
         Authorization: `Bearer ${jwt.jwt}` 
       }
@@ -139,7 +141,7 @@ const deleteMsgPopup=(msg)=>{
 const updateCart=(c)=>{
   if(c.id != null){
 
-   axios.put(`http://localhost:8080/api/cart/update`,c,{
+   axios.put(`${baseUrl}/api/cart/update`,c,{
     headers:{
       Authorization: `Bearer ${jwt.jwt}` 
     }

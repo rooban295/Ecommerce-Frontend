@@ -17,6 +17,8 @@ import { setSearch } from '../slices/Search';
 
 export const Nav = () => {
 
+    const baseUrl=import.meta.env.VITE_BASE_URL;
+
     const viewNav=useNavigate();
     const admin=useSelector((state)=>state.admin.admin);
     
@@ -40,7 +42,7 @@ export const Nav = () => {
 
             if(jwt.message ==='Login successfully'){
 
-            axios.get('http://localhost:8080/userinfo',{
+            axios.get(`${baseUrl}/userinfo`,{
                 headers:{
                     Authorization: `Bearer ${jwt.jwt}`
                 }
@@ -77,7 +79,7 @@ export const Nav = () => {
                 setDropDownSearch(false)
             }
 
-            await axios.get(`http://localhost:8080/api/product/search?keyword=${keyword}`)
+            await axios.get(`${baseUrl}/api/product/search?keyword=${keyword}`)
             .then((res)=>{
                 setSearchResult(res.data);
             })
@@ -95,7 +97,7 @@ export const Nav = () => {
         useEffect(()=>{
             if(jwt.message ==='Login successfully'){
         
-            axios.get('http://localhost:8080/api/cart/getcartitem',{
+            axios.get(`${baseUrl}/api/cart/getcartitem`,{
               headers:{
                 Authorization: `Bearer ${jwt.jwt}`
               }
@@ -156,7 +158,7 @@ export const Nav = () => {
 
 
   return (
-    <div className='sticky top-0'>
+    <div className='sticky top-0 z-50'>
         
         <nav className='flex justify-between px-3 md:px-10 items-center py-3 bg-slate-300 shadow-xl'>  {/**max-md:hidden max-lg:px-1 */}
 
@@ -197,8 +199,8 @@ export const Nav = () => {
 
 
             <div className='hidden sm:block'>
-            <div className='flex gap-5'>
-            <FilterProduct />      {/** filtering the product */}           
+            <div className='flex gap-5'>  
+            {/* <FilterProduct />      * filtering the product            */}
             <div className={`${admin ? '':'hidden'} `}>
             <Link to='/category' className={`hover:text-lg hidden md:block text-slate-600 hover:text-slate-800`}>Add Category</Link>
             </div>
@@ -213,9 +215,11 @@ export const Nav = () => {
             <button onClick={()=>{setAccountPopup(!accountPopup)}} onFocus={()=>{setAccountPopup(false)}} onBlur={()=>{setTimeout(()=>{setAccountPopup(false)},200)}}> <VscAccount className='max-md:hidden h-6 w-6 cursor-pointer text-slate-500 hover:text-slate-800'/></button>
 
             {   
-            // accountPopup ?
-            accountPopup ?  
-            <div className='bg-slate-300 flex flex-col gap-4 p-2 absolute top-[50px] right-[1px] rounded-md shadow-2xl w-[200px] z-20'>
+            // accountPopup 
+
+            accountPopup ?
+            <div className='relative'>
+            <div className='bg-slate-300  flex flex-col gap-4 p-2 absolute top-[50px] right-[1px] rounded-md shadow-2xl w-[200px] z-50'>
                 <p className='font-bold text-center '> Account </p>
                 <p className={`shadow-xl cursor-pointer rounded text-green-600 px-2 ${accNotification ? 'block':'hidden'}`}> <span className='inline mr-3'>{userinfo.msg}</span> <IoMdClose className='inline w-5 h-5 text-slate-600  hover:text-slate-950 hover:h-6 hover:w-6' onClick={()=>{handeLoginNotication()}}/></p>
                 <p className='tracking-normal'>{userinfo.fullName}</p>
@@ -224,6 +228,7 @@ export const Nav = () => {
                 <Link to='/vieworder' className=' hover:text-slate-600'>Orders</Link>
                 <p onClick={handleLogout} className='rounded bg-slate-600 hover:bg-slate-800 p-1 text-white w-fit'>Logout <span className='ml-2'><IoLogOutOutline className='inline h-5 w-5'/></span></p>         
             </div>
+            </div> 
             :
             <></>
            }
@@ -274,7 +279,7 @@ export const Nav = () => {
 
 
             <div className='flex flex-col mt-20 ml-5'>
-            <FilterProduct />
+            {/* <FilterProduct /> */}
             <Link to='product' className={`hover:text-lg text-slate-600 hover:text-slate-800 mt-5 ${admin?'':'hidden'}`}>Add product</Link>
             <div className={`${admin ? '':'hidden'} `}>
             <Link to='/category' className={`text-slate-600 hover:text-slate-800`}>Add Category</Link>

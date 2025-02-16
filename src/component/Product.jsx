@@ -3,8 +3,11 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import {useSelector } from 'react-redux'
 import {useNavigate } from 'react-router-dom'
+import { FilterProduct } from './FilterProduct'
 
 export const Product = () => {
+
+    const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const jwt = useSelector((state)=>state.jwt.jwtToken)
 
@@ -22,7 +25,7 @@ export const Product = () => {
     
 
     const allproduct=()=>{
-        axios.get('http://localhost:8080/api/product')
+        axios.get(`${baseUrl}/api/product`)
         .then((res)=>{
             setProduct(res.data);
         })
@@ -65,7 +68,7 @@ export const Product = () => {
         
         if(cartitem.productId != null){ 
             
-        axios.post('http://localhost:8080/api/cart/addtocart',cartitem,{
+        axios.post(`${baseUrl}/api/cart/addtocart`,cartitem,{
             headers:{
                 Authorization:`Bearer ${jwt.jwt}`
             }
@@ -85,7 +88,7 @@ export const Product = () => {
     useEffect(()=>{ 
         if(categoryId > 0){
 
-        axios.get(`http://localhost:8080/category/${categoryId}`)
+        axios.get(`${baseUrl}/category/${categoryId}`)
         .then((res)=>{
             setCategory(res.data)
         })
@@ -100,6 +103,10 @@ export const Product = () => {
     
   return (
     <div className={`px-6 md:px-20 bg-slate-200 ${product.length > 0 ?'':'h-screen'}`}>
+        
+        <div className='pt-5'>
+        <FilterProduct/>
+        </div>
 
         <h1 className="text-3xl text-center pt-10">{categoryId == 0 ? 'Products' :category.categoryName}</h1>
         

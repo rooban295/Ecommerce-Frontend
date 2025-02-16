@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 export const ViewProduct = ({productId}) => {
 
+    const baseUrl=import.meta.env.VITE_BASE_URL;
     const jwt = useSelector((state)=>state.jwt.jwtToken)
     const admin=useSelector((state)=>state.admin.admin);
     const cartNav=useNavigate()
@@ -18,7 +19,7 @@ export const ViewProduct = ({productId}) => {
     
 
     const productById=(id)=>{
-        axios.get(`http://localhost:8080/api/product/${id}`)
+        axios.get(`${baseUrl}/api/product/${id}`)
         .then((res)=>{ 
             setProduct(res.data);   
         })
@@ -40,7 +41,7 @@ export const ViewProduct = ({productId}) => {
 
     const deleteProductRequest=async(id)=>{        
         
-        await axios.delete(`http://localhost:8080/api/product/${id}`)
+        await axios.delete(`${baseUrl}/api/product/${id}`)
         .then((res)=>{
             home('/')
         })
@@ -81,7 +82,7 @@ export const ViewProduct = ({productId}) => {
         
         if(cartitem.productId != null){ 
             
-        axios.post('http://localhost:8080/api/cart/addtocart',cartitem,{
+        axios.post(`${baseUrl}/api/cart/addtocart`,cartitem,{
             headers:{
                 Authorization:`Bearer ${jwt.jwt}`
             }

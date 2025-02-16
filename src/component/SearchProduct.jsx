@@ -2,8 +2,11 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import { FilterProduct } from './FilterProduct';
 
 export const SearchProduct = () => {
+
+  const baseUrl=import.meta.env.VITE_BASE_URL;
 
   const jwt = useSelector((state)=>state.jwt.jwtToken)
 
@@ -38,7 +41,7 @@ const addToCart=(cartitems)=>{
   
   if(cartitems.productId != null){ 
       
-  axios.post('http://localhost:8080/api/cart/addtocart',cartitems,{
+  axios.post(`${baseUrl}/api/cart/addtocart`,cartitems,{
       headers:{
           Authorization:`Bearer ${jwt.jwt}`
       }
@@ -56,7 +59,9 @@ const addToCart=(cartitems)=>{
   return (
     <div className={`px-6 md:px-20 bg-slate-200 ${searchProduct.length > 0 ?'':'h-screen'}`}>
 
-        <h1 className="text-3xl text-center pt-10">Search Result</h1>
+      {/* <FilterProduct/> */}
+
+      <h1 className="text-3xl text-center pt-10">Search Result</h1>
         
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-20'>
         {

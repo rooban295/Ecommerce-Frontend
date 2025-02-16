@@ -11,6 +11,8 @@ import { FcOk } from "react-icons/fc";
 
 
 export const Login = () => {
+    
+    const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const jwtDispatch=useDispatch();
 
@@ -80,7 +82,7 @@ export const Login = () => {
     }
 
     const loginApi=()=>{
-        axios.post('http://localhost:8080/api/auth/signin',loginDetails)
+        axios.post(`${baseUrl}/api/auth/signin`,loginDetails)
         .then((res)=>{
             setJwtTokenObject(res.data)
             if(res.data.role === 'ROLE_ADMIN'){
@@ -98,7 +100,7 @@ export const Login = () => {
 
     //creating account
     const createAccountApi=()=>{
-        axios.post('http://localhost:8080/api/auth/signup',accountDetails)
+        axios.post(`${baseUrl}/api/auth/signup`,accountDetails)
         .then((res)=>{
             showNotication(res.data.message,<FcOk className='inline h-7 w-7'/>)
         })

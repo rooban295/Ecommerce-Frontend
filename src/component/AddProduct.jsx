@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 export const AddProduct = () => {
 
+    const baseUrl=import.meta.env.VITE_BASE_URL;
+    
     const msg=useRef(null);
     
     const home=useNavigate();
@@ -23,7 +25,7 @@ export const AddProduct = () => {
 
     const[AllCategoryList,setAllCategoryList]=useState([]);
     const allCategory=()=>{
-        axios.get('http://localhost:8080/category')
+        axios.get(`${baseUrl}/category`)
         .then((res)=>{
             setAllCategoryList(res.data);
         })
@@ -51,7 +53,7 @@ export const AddProduct = () => {
     //add Product
     const AddProduct=(product)=>{
         
-        axios.post('http://localhost:8080/api/product/add',product)
+        axios.post(`${baseUrl}/api/product/add`,product)
         .then((res)=>{
             home('/')
         })

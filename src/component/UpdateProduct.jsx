@@ -7,6 +7,8 @@ import { GrView } from "react-icons/gr";
 
 export const UpdateProduct = () => {
 
+    const baseUrl=import.meta.env.VITE_BASE_URL;
+
     const home=useNavigate();
 
     const msg=useRef();
@@ -27,7 +29,7 @@ export const UpdateProduct = () => {
 
     const[AllCategoryList,setAllCategoryList]=useState([]);
     const allCategory=()=>{
-        axios.get('http://localhost:8080/category')
+        axios.get(`${baseUrl}/category`)
         .then((res)=>{
             setAllCategoryList(res.data);
         })
@@ -39,7 +41,7 @@ export const UpdateProduct = () => {
 
 
     const productById=()=>{
-        axios.get(`http://localhost:8080/api/product/${id}`)
+        axios.get(`${baseUrl}/api/product/${id}`)
         .then((res)=>{ 
             setProduct(res.data);  
         })
@@ -76,7 +78,7 @@ export const UpdateProduct = () => {
 
     const updateProduct=(product)=>{
 
-        axios.put(`http://localhost:8080/api/product/update/${id}`,product)
+        axios.put(`${baseUrl}/api/product/update/${id}`,product)
         .then((res)=>{
             setTimeout(()=>{
                 home('/')

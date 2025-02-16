@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 export const ViewOrder = () => {
 
+    const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const jwt =useSelector((state)=>state.jwt.jwtToken);
 
@@ -19,7 +20,7 @@ export const ViewOrder = () => {
 
         if(jwt.jwt!=null){
 
-        axios.get('http://localhost:8080/api/order/orders',{
+        axios.get(`${baseUrl}/api/order/orders`,{
             headers:{
                 Authorization: `Bearer ${jwt.jwt}`
             }
@@ -35,7 +36,7 @@ export const ViewOrder = () => {
     }
 
     const delteOrderApi=(id)=>{
-        axios.delete(`http://localhost:8080/api/order/${id}`)
+        axios.delete(`${baseUrl}/api/order/${id}`)
         .then((res)=>{
             fetchOrders()
         })

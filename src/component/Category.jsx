@@ -5,6 +5,8 @@ import { RiCloseLargeFill } from "react-icons/ri";
 
 export const Category = () => {
 
+const baseUrl=import.meta.env.VITE_BASE_URL;
+
 const [allCategory,setAllCategory]=useState([]);
 
 const [addCat,setAddCategory]=useState({
@@ -17,7 +19,7 @@ useEffect(() => {
 
 
 const fetchCategories=()=>{
-    axios.get('http://localhost:8080/category')
+    axios.get(`${baseUrl}/category`)
     .then((res)=>{
         setAllCategory(res.data)
     })
@@ -29,7 +31,7 @@ const fetchCategories=()=>{
 
 
 const addCategory= async ()=>{
-   await axios.post(`http://localhost:8080/category/add`,addCat)
+   await axios.post(`${baseUrl}/category/add`,addCat)
    .then((res)=>{
      setAllCategory(allCategory) 
      fetchCategories();    
@@ -42,7 +44,9 @@ const addCategory= async ()=>{
 
 const [updateCategory,setUpdateCategory]=useState({
     id:null,
-    categoryName:''
+    categoryName:'',
+    categoryImageUrl:'',
+    bannerImageUrl:''
 })
 
 const handelUpdateInput=(e)=>{
@@ -51,7 +55,7 @@ const handelUpdateInput=(e)=>{
 }
 
 const updateApi=()=>{ 
-    axios.put(`http://localhost:8080/category/update/${updateCategory.id}`,updateCategory)
+    axios.put(`${baseUrl}/category/update/${updateCategory.id}`,updateCategory)
    .then((res)=>{
        updatePopup.current.style.top='-1000px'
        fetchCategories()
@@ -63,7 +67,7 @@ const updateApi=()=>{
 }
 
 const getCategoryApi= async (id)=>{
-    await axios.get(`http://localhost:8080/category/${id}`)
+    await axios.get(`${baseUrl}/category/${id}`)
    .then((res)=>{
     setUpdateCategory(res.data)
    })
@@ -76,7 +80,7 @@ const getCategoryApi= async (id)=>{
 
 
 const deleteApi= async (id)=>{
-   await axios.delete(`http://localhost:8080/category/${id}`)
+   await axios.delete(`${baseUrl}/category/${id}`)
    .then((res)=> {
     fetchCategories()
     } )
@@ -117,11 +121,19 @@ const handelUpdate=(e)=>{
     <div className='px-2 sm:px-10 h-screen bg-slate-200 relative'>
         <h1 className='text-center pt-10 text-2xl uppercase'>Category</h1>
 
-        <div ref={updatePopup} className='absolute bg-slate-300 top-[-1000px] left-[10%] rounded-lg w-[80%] h-[200px] duration-300'>
+        <div ref={updatePopup} className='absolute bg-slate-300 top-[-1000px] left-[10%] rounded-lg w-[80%]  duration-300'>
             <form onSubmit={handelUpdate} className='flex flex-col gap-5 p-2'>
                 <div className='mt-10'>
                 <label htmlFor="" className='text-slate-700'>Category Name</label>
                 <input type="text" name='categoryName' value={updateCategory.categoryName} onChange={handelUpdateInput} className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
+                </div>
+                <div className=''>
+                <label htmlFor="" className='text-slate-700'>Category Image</label>
+                <input type="text" name='categoryImageUrl' value={updateCategory.categoryImageUrl} onChange={handelUpdateInput} className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
+                </div>
+                <div className=''>
+                <label htmlFor="" className='text-slate-700'>Category Banner Image</label>
+                <input type="text" name='bannerImageUrl' value={updateCategory.bannerImageUrl} onChange={handelUpdateInput} className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
                 </div>
                 <button className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
             </form>
