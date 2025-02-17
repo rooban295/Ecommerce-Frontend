@@ -102,7 +102,7 @@ export const Product = () => {
   
     
   return (
-    <div className={`px-6 md:px-20 bg-slate-200 ${product.length > 0 ?'':'h-screen'}`}>
+    <div className={`px-4 md:px-20 bg-slate-200 ${product.length > 0 ?'':'h-screen'}`}>
         
         <div className='pt-5'>
         <FilterProduct/>
@@ -114,7 +114,7 @@ export const Product = () => {
         {
             product.filter((item)=>categoryId > 0 ? item.category.id===categoryId : item).map((item,index)=>(
 
-                <div className='rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5 cursor-pointer' key={index}>
+                <div className='mx-4 rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5 cursor-pointer' key={item.id}>
                 <div className=' mt-0 px-4 flex flex-col gap-5 items-center '>  
                     
                     <img  onClick={()=>{handelProductClick(item.id)}} src={`https://drive.google.com/thumbnail?id=${imageUrl(item.productImg)}`} alt={item.name} className='mt-5 h-[180px] sm:h-[200px]'/>

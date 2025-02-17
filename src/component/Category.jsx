@@ -9,9 +9,7 @@ const baseUrl=import.meta.env.VITE_BASE_URL;
 
 const [allCategory,setAllCategory]=useState([]);
 
-const [addCat,setAddCategory]=useState({
-    categoryName:''
-})
+const [addCat,setAddCategory]=useState({})
 
 useEffect(() => {
     fetchCategories();
@@ -33,7 +31,7 @@ const fetchCategories=()=>{
 const addCategory= async ()=>{
    await axios.post(`${baseUrl}/category/add`,addCat)
    .then((res)=>{
-     setAllCategory(allCategory) 
+    updatePopup.current.style.top='-1000px'
      fetchCategories();    
    })
    .catch((err)=>{
@@ -54,7 +52,8 @@ const handelUpdateInput=(e)=>{
     setUpdateCategory({...updateCategory,[name]:value})
 }
 
-const updateApi=()=>{ 
+const updateApi=()=>{
+    if(updateCategory.id){
     axios.put(`${baseUrl}/category/update/${updateCategory.id}`,updateCategory)
    .then((res)=>{
        updatePopup.current.style.top='-1000px'
@@ -64,6 +63,7 @@ const updateApi=()=>{
        console.log(err);
        
    })
+}
 }
 
 const getCategoryApi= async (id)=>{
@@ -91,20 +91,26 @@ const deleteApi= async (id)=>{
 }
 
 
-const handelInput=(e)=>{
-    const{name,value}=e.target
-    setAddCategory({ [name] : value })
-}
 
-const handelAddCategory=(e)=>{
-    e.preventDefault();
-    fetchCategories();
+// working.....
+const handelAddCategory=()=>{
+    setAddCategory(updateCategory)
     addCategory()
+    fetchCategories();
 }
 const updatePopup = useRef();
 
 const handelUpdateBtn=(id)=>{
+    if(id){
     getCategoryApi(id)
+    }
+    else{
+    setUpdateCategory({
+        id:null,
+        categoryName:'',
+        categoryImageUrl:'',
+        bannerImageUrl:''})
+    }
     updatePopup.current.style.top='40px'
 }
 const handelDeleteBtn=(id)=>{
@@ -135,25 +141,27 @@ const handelUpdate=(e)=>{
                 <label htmlFor="" className='text-slate-700'>Category Banner Image</label>
                 <input type="text" name='bannerImageUrl' value={updateCategory.bannerImageUrl} onChange={handelUpdateInput} className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
                 </div>
-                <button className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
-            </form>
+                {
+                    updateCategory.id==null?
+                    <button onClick={()=>handelAddCategory()} className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Add</button>
+                    :    
+                    <button className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
+                }
+             </form>
             <RiCloseLargeFill className='absolute top-3 right-4 h-5 w-5 hover:h-7 hover:w-7 animate-bounce' onClick={()=>updatePopup.current.style.top='-1000px'}/>
         </div>
 
 
-
-        <div onSubmit={handelAddCategory} className='p-2 flex justify-end mt-10'>
-            <form className='flex gap-2 items-center'>
-            <input type="text" required className='outline-none p-1 ring ring-blue-500 hover:ring-2 rounded' name='categoryName' value={addCat.categoryName} onChange={handelInput}/>
-            <button type='submit' className='bg-slate-400 hover:bg-slate-500 w-fit p-1 rounded'>Add</button>
-            </form>
+{/* working onSubmit={handelAddCategory}  */}
+        <div className='p-2 flex justify-end mt-10'>
+            <button type='submit'  onClick={()=>handelUpdateBtn()} className='bg-slate-400 hover:bg-slate-500 w-fit p-1 rounded text-white'>Add</button>
         </div>
 
         <table className='w-full mx-auto bg-slate-300 rounded-lg shadow-xl'>
             <thead className='text-start'>
                 <tr className=''>
-                    <th className='uppercase text-slate-700'>Category Name</th>
-                    <th className='uppercase text-slate-700'>Action</th>
+                    <th className='text-slate-700'>Category Name</th>
+                    <th className='text-slate-700'>Action</th>
                 </tr>
             </thead>
 

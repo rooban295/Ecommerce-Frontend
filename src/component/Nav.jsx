@@ -2,7 +2,6 @@ import axios, { all } from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { LuShoppingCart } from "react-icons/lu";
-import { FilterProduct } from './FilterProduct';
 import { VscAccount } from "react-icons/vsc";
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdClose } from "react-icons/io";
@@ -175,8 +174,8 @@ export const Nav = () => {
 
                 <div className=''>
                 <div className='flex relative'>
-                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-slate-500 hover:ring-2 pl-2 rounded-lg p-1 w-[200px] sm:w-[300px] md:w-[350px] mr-2 border-r-none'  placeholder='Search Product'/>
-                <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-4 top-1 text-slate-400 hover:text-slate-600 ' onClick={handelSearchList}/>
+                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-slate-500 hover:ring-2 pl-2 rounded-lg p-1 w-[230px] sm:w-[300px] md:w-[350px]'  placeholder='Search Product'/>
+                <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-2 top-1 text-slate-400 hover:text-slate-600 ' onClick={handelSearchList}/>
                 </div>
                 {
                     dropDownsearch && (
@@ -278,13 +277,13 @@ export const Nav = () => {
             <RiCloseLargeFill className='absolute right-5 top-5 h-7 w-7 text-slate-600 hover:w-8 hover:h-8 animate-bounce transition duration-100' onClick={hideMenu}/>
 
 
-            <div className='flex flex-col mt-20 ml-5'>
+            <div className='flex flex-col gap-3 mt-20 ml-5'>
             {/* <FilterProduct /> */}
             <Link to='product' className={`hover:text-lg text-slate-600 hover:text-slate-800 mt-5 ${admin?'':'hidden'}`}>Add product</Link>
             <div className={`${admin ? '':'hidden'} `}>
             <Link to='/category' className={`text-slate-600 hover:text-slate-800`}>Add Category</Link>
             </div>
-            <Link to='/vieworder' className=' hover:text-slate-600 my-3'>Orders</Link>
+            <Link to='/vieworder' className='text-slate-600 hover:text-slate-600 '>Orders</Link>
             </div>
 
            <div className={`absolute top-9 left-9  ${accNotification ? 'block':'hidden'}`}> {/**  Account Notification*/}
