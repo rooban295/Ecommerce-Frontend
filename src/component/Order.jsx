@@ -7,6 +7,8 @@ import { SlCheck } from "react-icons/sl";
 import { CiCreditCard1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline } from "react-icons/io5";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
+
 
 export const Order = () => {
 
@@ -148,6 +150,7 @@ const removeOrderItem=(id)=>{
       }
     })
     .then((res)=>{
+      toast.success("order Item removed")
       deleteMsgPopup(res.data);
       fetchAllItem();
       cardPriceDetais();
@@ -204,11 +207,15 @@ const removeOrderItem=(id)=>{
       }
     })
     .then((res)=>{
-      viewOrder('/vieworder')
+
+      toast.success("Order Placed Succesfully")
+
+      setTimeout(()=>{
+        viewOrder('/vieworder')
+      },2000)
     })
     .catch((err)=>{
       console.log(err);
-      
     })
   }
 
@@ -240,21 +247,6 @@ const removeOrderItem=(id)=>{
 
  
 
-  const imageUrl=(url)=>{
-    const newUrl=url.split("/");
-    return newUrl[5];
-}
-
-const[orderMsg,setOrderMsg]=useState('');
-
-const[handelOrderNoti,setOrderNoti]=useState(false)
-
-const Onot=()=>{
-  setOrderNoti(true)
-      setTimeout(()=>{
-        setOrderNoti(false)
-      },1000)
-}
   const handelPlaceOrder=()=>{
 
     if(address.city.length > 0 &&
@@ -270,12 +262,9 @@ const Onot=()=>{
     mobile:0
       })
       orderApi()
-      setOrderMsg("Order Placed Successfully")
-      Onot()
     }
     else{
-      setOrderMsg("Order Not Placed")
-      Onot()  
+      toast.warning("Order Not Placed")
     }
 
   }
@@ -285,13 +274,7 @@ const Onot=()=>{
   return (
     <div className=''>
 
-      {
-        handelOrderNoti ?
-        <div className='mt-5 relative'>
-          <p className='absolute left-[42%] shadow-2xl text-center bg-slate-300 w-fit p-1 px-10 rounded-lg'>{orderMsg}</p>
-        </div>
-        :<></>
-      }
+      <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
       
         <h1 className=' mt-5 sm:mt-8 text-center text-xl'>Order Summary</h1>
     

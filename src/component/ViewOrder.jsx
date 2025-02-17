@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 export const ViewOrder = () => {
 
@@ -38,6 +39,7 @@ export const ViewOrder = () => {
     const delteOrderApi=(id)=>{
         axios.delete(`${baseUrl}/api/order/${id}`)
         .then((res)=>{
+            toast.success("Item Cancel Successfully")
             fetchOrders()
         })
         .catch((err)=>{
@@ -57,6 +59,9 @@ export const ViewOrder = () => {
 
   return (
     <div className={`flex flex-col gap-7 pt-10 px-5 items-center bg-slate-200 ${orders.length >3 ?'':'h-screen'}`}>
+
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+
         <h1 className='text-center text-xl'>Order</h1>
         {orders.map((order) =>
         order.orderItem.map((prod,index) => (

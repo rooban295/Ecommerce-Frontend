@@ -4,6 +4,7 @@ import { useState } from 'react'
 import {useSelector } from 'react-redux'
 import {useNavigate } from 'react-router-dom'
 import { FilterProduct } from './FilterProduct'
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 export const Product = () => {
 
@@ -74,11 +75,11 @@ export const Product = () => {
             }
         })
         .then((res)=>{
-            cartNav('/cart')   
+            toast.success("Item add to the cart")
+            // cartNav('/cart')   
         })
         .catch((err)=>{
-            console.log(err);
-            
+            console.log(err);  
         })
     }
     }
@@ -104,6 +105,9 @@ export const Product = () => {
   return (
     <div className={`px-4 md:px-20 bg-slate-200 ${product.length > 0 ?'':'h-screen'}`}>
         
+        
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+
         <div className='pt-5'>
         <FilterProduct/>
         </div>

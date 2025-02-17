@@ -1,13 +1,15 @@
-
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { useNavigate, useParams } from 'react-router-dom';
 import { GrView } from "react-icons/gr";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 export const UpdateProduct = () => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
+
+    const[preview ,setPreview]=useState(false);
 
     const home=useNavigate();
 
@@ -80,6 +82,7 @@ export const UpdateProduct = () => {
 
         axios.put(`${baseUrl}/api/product/update/${id}`,product)
         .then((res)=>{
+            toast.success("Product Updated Successfully")
             setTimeout(()=>{
                 home('/')
             },2000)    
@@ -90,36 +93,19 @@ export const UpdateProduct = () => {
     }
 
 
-    //showing updatin notification
-    const showNotification=()=>{
-        msg.current.style.top='0px'
-        setTimeout(()=>{
-        msg.current.style.top='-100px'
-        },1000)
-    }
-
     const handelsubmit=(e)=>{
         e.preventDefault(); 
         updateProduct(product)  
-        showNotification(); 
         
     }
 
-    const imageUrl=(url)=>{
-        const newUrl=url.split("/");
-        return newUrl[5];
-    }
         
-    const[preview ,setPreview]=useState(false);
-
 
   return (
     <div className='flex flex-col items-center relative bg-slate-200'>
 
-        <div ref={msg} className='absolute top-[-100px] duration-75'>
-            <p className='flex justify-center items-center gap-2'>Data updated Successfully <IoCheckmarkCircleOutline  className='h-6 w-6 text-green-400 rounded-full'/></p>
-        </div>
-
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        
         <h1 className='pt-8 text-2xl font-bold'>Update Product</h1>
 
         <form onSubmit={handelsubmit} className='flex flex-col w-[95%] md:w-[70%] gap-5 p-5 rounded-lg shadow-2xl mt-5 bg-slate-300 mb-10'>

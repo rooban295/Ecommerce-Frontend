@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { setCartTotal } from '../slices/CartItemTotal';
 import { SlCheck } from "react-icons/sl";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 export const Cart = () => {
 
@@ -106,9 +107,9 @@ const removeCartItem=(id)=>{
       }
     })
     .then((res)=>{
+      toast.success("Item Removed successfully")
       cartItems()
       cartPrice()
-      deleteMsgPopup(res.data)
       cartItemTotal(setCartTotal(cartitem.length))
       
     })
@@ -147,7 +148,7 @@ const updateCart=(c)=>{
     }
   })
   .then((res)=>{
-
+    
     cartItems();
     cartPrice();
     cartItemTotal(setCartTotal(cartitem.length))
@@ -166,6 +167,7 @@ const handleAddQuantity = (cartItemId, quantity) => {
   if (quantity >= 1) {
     const updatedCartItem = { id: cartItemId, quantity: quantity + 1 };
     updateCart(updatedCartItem); // Directly pass the updated object
+    toast.success("Quantity Increased")
   }
 };
 
@@ -173,6 +175,7 @@ const handleReduceQuantity = (cartItemId, quantity) => {
   if (quantity >= 2) {
     const updatedCartItem = { id: cartItemId, quantity: quantity - 1 };
     updateCart(updatedCartItem); // Directly pass the updated object
+    toast.success("Quantity Decreased")
   }
 };
 
@@ -183,6 +186,9 @@ const handelCartPlaceOrder=()=>{
   
   return (
     <div className={`px-2 md:px-10 bg-slate-200 relative ${cartitem.length >3 ? '':'h-screen'} `}>
+
+      <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+      
 
       <div className='absolute top-[-1000px] left-[25%] p-1 bg-slate-300 rounded-lg duration-75' ref={deleteMess} >
         <p className=''>{deleteMsg}<SlCheck className='inline text-green-400 h-5 w-5'/></p>
@@ -212,7 +218,7 @@ const handelCartPlaceOrder=()=>{
 
                 <button onClick={()=>handleAddQuantity(item.id ,item.quantity)} className='bg-slate-400 rounded py-[1px] px-[4px] font-bold hover:bg-slate-600'>+</button> 
                 
-                {item.quantity}  
+                <span className='px-1'>{item.quantity}</span>
                 
                 <button onClick={()=>handleReduceQuantity(item.id,item.quantity)} className='bg-slate-400 rounded py-[1px] px-[6px] font-bold hover:bg-slate-600'>-</button>
 

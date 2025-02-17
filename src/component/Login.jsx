@@ -8,6 +8,7 @@ import { MdOutlineMailLock } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { setAdmin } from '../slices/Admin';
 import { FcOk } from "react-icons/fc";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 
 export const Login = () => {
@@ -32,6 +33,7 @@ export const Login = () => {
     const handelLoginInButton=()=>{
         setloginfrom(true)
     }
+
 
     const[accountDetails,setAccountDetails]=useState({
         fullName:'',
@@ -81,9 +83,15 @@ export const Login = () => {
         createAccountApi();
     }
 
+
+    //login 
     const loginApi=()=>{
         axios.post(`${baseUrl}/api/auth/signin`,loginDetails)
         .then((res)=>{
+
+            toast.success('Login successfully')
+
+            setTimeout(()=>{
             setJwtTokenObject(res.data)
             if(res.data.role === 'ROLE_ADMIN'){
                 adminDispatch(setAdmin(true))
@@ -91,9 +99,11 @@ export const Login = () => {
             else{
                 adminDispatch(setAdmin(false))
             } 
+            },3000)
+            
         })
         .catch((err)=>{
-            showNotication(err.response.data.message,<IoIosCloseCircleOutline className='inline h-7 w-7 text-red-600'/>)
+           toast.error("login failed")
         })
     }
 
@@ -102,10 +112,13 @@ export const Login = () => {
     const createAccountApi=()=>{
         axios.post(`${baseUrl}/api/auth/signup`,accountDetails)
         .then((res)=>{
-            showNotication(res.data.message,<FcOk className='inline h-7 w-7'/>)
+            toast.success("Register successfully")
+            setTimeout(()=>{
+                setloginfrom(!loginfrom)
+            },3000)
         })
         .catch((err)=>{
-            showNotication(err.response.data.message,<IoIosCloseCircleOutline className='inline h-7 w-7 text-red-600'/>)
+            toast.warning("This Email is already taken")
         })
     }
 
@@ -127,13 +140,8 @@ export const Login = () => {
     <div>
         <div className='h-screen w-screen relative bg-gradient-to-r from-slate-700 to-slate-400'>
 
-
-        <div ref={msg} className='absolute top-[-1000px] left-[20%] sm:left-[30%] md:left-[40%] lg:left-[40%] xl:left-[42%] p-5 rounded-md duration-75'>
-            {
-             <p className='text-white'> {noticationMsg[0]} {noticationMsg[1]}</p>
-            }
-        </div>
-
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
+        
         {
             loginfrom ?
             <form onSubmit={handleLoginSubmit}  className='outline-none flex flex-col gap-8 rounded-lg absolute top-[25%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'>

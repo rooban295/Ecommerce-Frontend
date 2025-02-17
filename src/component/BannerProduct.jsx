@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 export const BannerProduct = () => {
   const baseUrl=import.meta.env.VITE_BASE_URL;
@@ -67,7 +68,8 @@ export const BannerProduct = () => {
             }
         })
         .then((res)=>{
-            cartNav('/cart')   
+            toast.success("Item Added to Cart")
+            // cartNav('/cart')   
         })
         .catch((err)=>{
             console.log(err);
@@ -92,11 +94,17 @@ export const BannerProduct = () => {
     }
     },[categoryId])
   return (
-    <div className={`px-4 md:px-20 bg-slate-200 ${product.length !=0  ?'':'h-screen'}`}>
+    <div className={`px-4 md:px-20 bg-slate-200 ${product.length ?'':'h-screen'}`}>
 
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
+        
+        {
+        category.bannerImageUrl?   
        <div className='rounded-2xl  shadow-2xl h-[250px] md:h-[450px] pt-10'>
         <img src={category.bannerImageUrl} alt='banner Img' className='w-full h-full object-fill rounded-xl'/> 
        </div>
+       :<></>
+       }
             
         <h1 className="text-xl md:text-2xl text-center pt-10">{categoryId == 0 ? 'Products' :category.categoryName}</h1>
 

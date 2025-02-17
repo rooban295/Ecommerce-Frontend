@@ -3,19 +3,34 @@ import React, { useRef, useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { UpdateProduct } from './UpdateProduct'
+import { ToastContainer, Zoom, toast } from 'react-toastify';
+
+
 
 export const ViewProduct = ({productId}) => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
+
     const jwt = useSelector((state)=>state.jwt.jwtToken)
+
     const admin=useSelector((state)=>state.admin.admin);
+
     const cartNav=useNavigate()
+
     const updateProduct=useNavigate()
+
     const cart=useNavigate();
+
     const home=useNavigate();
+
     const {id}=useParams();
+
     const[product,setProduct]=useState({});
+
     const deletePopup=useRef();
+
+    const updatePopup = useRef();
     
 
     const productById=(id)=>{
@@ -37,13 +52,16 @@ export const ViewProduct = ({productId}) => {
 
     const handelUpdateButton =(productId)=>{
         updateProduct(`/updateproduct/${id}`)
+        // updatePopup.current.style.top='40px'
     }
 
-    const deleteProductRequest=async(id)=>{        
-        
-        await axios.delete(`${baseUrl}/api/product/${id}`)
+    const deleteProductRequest=async(productId)=>{         
+        await axios.delete(`${baseUrl}/api/product/${productId}`)
         .then((res)=>{
+            toast.success("Product Deleted Successfully")
+            setTimeout(()=>{
             home('/')
+            },2000)
         })
         .catch((err)=>{
             console.log(err);     
@@ -55,15 +73,6 @@ export const ViewProduct = ({productId}) => {
     const handelDeleteButton =()=>{
         setPop(!pop);
     }
-
-    const imageUrl = (url) => {
-        if (!url || typeof url !== "string") {
-            return ""; 
-        }
-        const newUrl = url.split("/"); 
-        
-        return newUrl[5] || "";
-    };
 
     const[cartitem ,setcartItem]=useState({
         productId:null,
@@ -88,7 +97,8 @@ export const ViewProduct = ({productId}) => {
             }
         })
         .then((res)=>{
-            cartNav('/cart') 
+            toast.success("Item Added to cart")
+            // cartNav('/cart') 
         })
         .catch((err)=>{
             console.log(err);
@@ -101,10 +111,13 @@ export const ViewProduct = ({productId}) => {
   return (
     <div  className={`relative sm:h-screen bg-slate-200 `}>
 
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        
         <div ref={deletePopup} className={`absolute h-[200px] z-10 p-2 top-[100px] left-[10px] sm:left-[180px] md:left-[350px] lg:left-[600px] 2xl:left-[40%] bg-slate-300 shadow-2xl  blur-none rounded-lg ${pop ?'bolck':'hidden'}`}>
             <p className='pt-10'>Are you sure do you want to delete this product?</p>
             <div className='flex gap-4 justify-center mt-5'>
-                <button onClick={()=>{deleteProductRequest(product.id)}} className='bg-green-500 hover:bg-green-600 px-3 rounded'>Yes</button>
+                <button onClick={()=>deleteProductRequest(product.id)} className='bg-green-500 hover:bg-green-600 px-3 rounded'>Yes</button>
+
                 <button onClick={()=>{handelDeleteButton()}} className='bg-red-500 hover:bg-red-600 px-3 rounded'>NO</button>
             </div>
         </div>
@@ -133,8 +146,10 @@ export const ViewProduct = ({productId}) => {
                </div>
         </div>
             }
-        <div>
-        </div>
+            {/* <div ref={updatePopup} className='absolute bg-slate-300 top-[-1000px] left-[10%] rounded-lg w-[80%]  duration-300'>
+            <UpdateProduct className='mx-0 px-0 mt-0 p-0 py-0'/>
+            <RiCloseLargeFill className='absolute top-3 right-4 h-5 w-5 hover:h-7 hover:w-7 animate-bounce' onClick={()=>updatePopup.current.style.top='-1000px'}/>          
+            </div> */}
     </div>
   )
 }

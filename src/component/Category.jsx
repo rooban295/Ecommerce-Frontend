@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { RiCloseLargeFill } from "react-icons/ri";
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 export const Category = () => {
 
@@ -35,7 +36,7 @@ const fetchCategories=()=>{
 const addCategory= async ()=>{
    await axios.post(`${baseUrl}/category/add`,addCat)
    .then((res)=>{
-    updatePopup.current.style.top='-1000px'
+    toast.success("Category Added successfully")
      fetchCategories();    
    })
    .catch((err)=>{
@@ -62,8 +63,8 @@ const updateApi=()=>{
     if(updateCategory.id){
     axios.put(`${baseUrl}/category/update/${updateCategory.id}`,updateCategory)
    .then((res)=>{
-       updatePopup.current.style.top='-1000px'
-       fetchCategories()
+    toast.success("Category Updated Successfully")
+    fetchCategories()
    })
    .catch((err)=>{
        console.log(err);
@@ -88,11 +89,11 @@ const getCategoryApi= async (id)=>{
 const deleteApi= async (id)=>{
    await axios.delete(`${baseUrl}/category/${id}`)
    .then((res)=> {
+    toast.success("Deleted Successfully");
     fetchCategories()
     } )
    .catch((err)=>{
-       console.log(err);
-       
+       console.log(err);  
    })
 }
 
@@ -129,10 +130,13 @@ const handelUpdate=(e)=>{
 
   return (
     <div className='px-2 sm:px-10 h-screen bg-slate-200 relative'>
+        
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+
         <h1 className='text-center pt-10 text-2xl uppercase'>Category</h1>
 
         <div ref={updatePopup} className='absolute bg-slate-300 top-[-1000px] left-[10%] rounded-lg w-[80%]  duration-300'>
-            <form onSubmit={handelUpdate} className='flex flex-col gap-5 p-2'>
+            <form onSubmit={handelUpdate}  className='flex flex-col gap-5 p-2'>
                 <div className='mt-10'>
                 <label htmlFor="" className='text-slate-700'>Category Name</label>
                 <input type="text" name='categoryName' value={updateCategory.categoryName} onChange={handelUpdateInput} className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
@@ -147,9 +151,9 @@ const handelUpdate=(e)=>{
                 </div>
                 {
                     updateCategory.id==null?
-                    <button type='button' onClick={()=>handelAddCategory()} className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Add</button>
+                    <button type='button' onClick={()=>{handelAddCategory(),updatePopup.current.style.top='-1000px'}} className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Add</button>
                     :    
-                    <button type='submit' className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
+                    <button type='submit' onClick={()=>updatePopup.current.style.top='-1000px'} className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
                 }
              </form>
             <RiCloseLargeFill className='absolute top-3 right-4 h-5 w-5 hover:h-7 hover:w-7 animate-bounce' onClick={()=>updatePopup.current.style.top='-1000px'}/>

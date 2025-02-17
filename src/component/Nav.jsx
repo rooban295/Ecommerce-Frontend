@@ -71,7 +71,7 @@ export const Nav = () => {
             setkeyword(e.target.value)
 
 
-            if(keyword.length >= 0){
+            if(keyword.length >= 2){
                 setDropDownSearch(true)
             }
             else{

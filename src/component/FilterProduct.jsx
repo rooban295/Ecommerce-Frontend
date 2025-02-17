@@ -53,7 +53,6 @@ export const FilterProduct = () => {
 
   const handelBanner=(id)=>{
     setCategoryValue(id)
-    console.log(id);
     bannerProduct("/bannerproduct")
   }
 
@@ -62,11 +61,6 @@ export const FilterProduct = () => {
     <div className=''>
       
             <div className='flex justify-evenly flex-wrap shadow-2xl rounded-sm bg-slate-300  py-3'>
-
-            <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelCategory(0)}>
-                        <img src={``} alt='home img' className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
-                        <p className='text-slate-600 text-sm sm:md hover:text-lg hover:text-slate-800'>Home</p>
-            </div>
             {
                 category.map((item,index)=>(
                     <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelBanner(item.id)} key={item.id}>
