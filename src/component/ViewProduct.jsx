@@ -113,7 +113,7 @@ export const ViewProduct = ({productId}) => {
             {
         <div className={`mt-10 flex flex-col sm:flex-row w-[90%] py-10 items-center justify-center gap-10  bg-slate-300  mx-auto rounded-xl shadow-xl p-2 mb-10 ${pop?'blur-xl':''}`}>
             
-            <img src={`https://drive.google.com/thumbnail?id=${imageUrl(`${product.productImg}`)}`} alt='google drive img' className=''/>
+            <img src={product.productImg} alt='google drive img' className=''/>
 
                <div className='text-xl flex flex-col gap-5 p-3'>
                <h1 className='text-xl'><span className=''></span>{product.productName}</h1>

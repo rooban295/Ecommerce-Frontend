@@ -133,7 +133,7 @@ export const UpdateProduct = () => {
                         </div>
             
                         <div className={`p-2 bg-neutral-200 rounded-2xl ${preview?'block':'hidden'}`}>
-                        <img src={`https://drive.google.com/thumbnail?id=${imageUrl(`${product.productImg}`)}`} alt='google drive img' className='mt-5 '/>
+                        <img src={product.productImg} alt='google drive img' className='mt-5 '/>
                         </div>
             
                         </div>

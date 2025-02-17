@@ -185,7 +185,7 @@ export const Nav = () => {
                                 searchResult.map((item,index)=>(
                                     <li key={index} className='flex justify-between my-5 hover:bg-slate-400 px-2 rounded-sm cursor-pointer'>
                                         <p onClick={()=>(viewNav(`/view/${item.id}`))}>{item.productName}</p>
-                                        <img src={`https://drive.google.com/thumbnail?id=${imageUrl(item.productImg)}`} alt={item.name} className='h-[50px] w-[50px'/>
+                                        <img src={item.productImg} alt={item.name} className='h-[50px] w-[50px'/>
                                     </li>
                                 ))
                             ):(

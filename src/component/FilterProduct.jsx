@@ -11,12 +11,15 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useNavigate } from 'react-router-dom';
 
 export const FilterProduct = () => {
     
     const baseUrl=import.meta.env.VITE_BASE_URL;
     
     const categorydispatch = useDispatch();
+
+    const bannerProduct=useNavigate();
 
     const[category,setCategory]=useState([]);
 
@@ -46,27 +49,18 @@ export const FilterProduct = () => {
     categorydispatch(setCategoryId(categoryValue));
   },[categoryValue])
 
-  const imageUrl=(url)=>{
-    if(url!=null){
-    const newUrl=url.split("/"); 
-    return newUrl[5].toString();
-    }
-}
+ 
+
+  const handelBanner=(id)=>{
+    setCategoryValue(id)
+    console.log(id);
+    bannerProduct("/bannerproduct")
+  }
 
   
   return (
     <div className=''>
-         {/* <select className='outline-none text-slate-800 hover:text-lg' value={categoryValue} onChange={handelCategory}>
-            <option >Select the Category</option>
-            <option >All Category</option>
-                {
-                    category.map((item,index)=>(
-                        <option value={item.id} key={item.categoryName}>{item.categoryName}</option>
-                    ))
-                    
-                }
-            </select> */}
-
+      
             <div className='flex justify-evenly flex-wrap shadow-2xl rounded-sm bg-slate-300  py-3'>
 
             <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelCategory(0)}>
@@ -75,9 +69,14 @@ export const FilterProduct = () => {
             </div>
             {
                 category.map((item,index)=>(
-                    <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelCategory(item.id)} key={item.id}>
-                        <img src={`https://drive.google.com/uc?export=view&id=${imageUrl(item.categoryImageUrl)}`} alt={item.name} className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
+                    <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelBanner(item.id)} key={item.id}>
+                      {item.categoryImageUrl !=''?
+                        <>
+                        <img src={item.categoryImageUrl} alt={item.name} className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
                         <p className='text-slate-600 text-sm sm:md hover:text-lg hover:text-slate-800'>{item.categoryName}</p>
+                        </>
+                        :<></>
+                      }
                     </div>
                 ))
             }
@@ -86,12 +85,15 @@ export const FilterProduct = () => {
         <Swiper spaceBetween={30} centeredSlides={true} autoplay={{delay: 2000 , disableOnInteraction: false,}} pagination={{clickable: true,}}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper mt-5 rounded-md shadow-2xl h-[200px] md:h-[300px]"
+        className="mySwiper mt-5 rounded-md shadow-2xl h-[250px] md:h-[450px]"
       >
         {
         category.map((item,index)=>(
-        <div key={item.id} className='w-full h-full' onClick={()=>handelCategory(item.id)}>
-        <SwiperSlide><img src={`https://drive.google.com/uc?export=view&id=${imageUrl(item.bannerImageUrl)}`} alt='banner Img' className='w-full h-full cursor-pointer object-fill' onClick={()=>handelCategory(item.id)}/></SwiperSlide>
+        <div key={item.id} className='w-full h-full'>
+        {item.bannerImageUrl !='' ?
+        <SwiperSlide><img src={item.bannerImageUrl} alt='banner Img' className='w-full h-full cursor-pointer object-fill' onClick={()=>handelBanner(item.id)}/></SwiperSlide>
+        :<></>
+         }
         </div>
         ))
         }

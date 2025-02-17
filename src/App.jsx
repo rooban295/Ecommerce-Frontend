@@ -14,6 +14,7 @@ import { Order } from './component/Order'
 import { ViewOrder } from './component/ViewOrder'
 import { Category } from './component/Category'
 import { SearchProduct } from './component/SearchProduct'
+import { BannerProduct } from './component/BannerProduct'
 
 function App() {
   
@@ -52,6 +53,7 @@ useEffect(()=>{
       <Route path='/vieworder' element={<ViewOrder/>}></Route>
       <Route path='/category' element={<Category/>}></Route>
       <Route path='/search' element={<SearchProduct/>}></Route>
+      <Route path='/bannerproduct' element={<BannerProduct/>}></Route>
     </Routes>
     <Footer/>
     </BrowserRouter>)

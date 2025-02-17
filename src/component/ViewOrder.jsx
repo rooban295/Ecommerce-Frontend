@@ -61,7 +61,7 @@ export const ViewOrder = () => {
         {orders.map((order) =>
         order.orderItem.map((prod,index) => (
             <div className='flex justify-center sm:w-[90%] gap-2 md:gap-10 bg-slate-300 p-2 rounded-md' key={index}>
-            <img src={`https://drive.google.com/thumbnail?id=${imageUrl(`${prod.product.productImg}`)}`} alt='google drive img loading' className='h-15 w-15 '/>
+            <img src={prod.product.productImg} alt='google drive img loading' className='h-15 w-15 '/>
             <div>
             <p>{prod.product.productName}</p>
             <p>${prod.orderItemTotal}</p>

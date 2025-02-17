@@ -344,7 +344,7 @@ const Onot=()=>{
             <div className='flex  gap-4 rounded-md bg-slate-300 shadow-md hover:shadow-2xl' key={index}>
 
               <div className='flex justify-center items-center' onClick={()=>{handelImg(item.product.id)}}>
-              <img src={item.product ? `https://drive.google.com/thumbnail?id=${imageUrl(item.product.productImg)}` :'https://images.app.goo.gl/TDXnWh18KyRJhhzj9'} alt="" className=' w-24 p-1 cursor-pointer' />
+              <img src={item.product ? `${item.product.productImg}` :'https://images.app.goo.gl/TDXnWh18KyRJhhzj9'} alt="" className=' w-24 p-1 cursor-pointer' />
               </div>
 
               <div className='flex-col gap-5 md:gap-10 p-2 items-center'>

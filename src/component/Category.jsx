@@ -9,7 +9,11 @@ const baseUrl=import.meta.env.VITE_BASE_URL;
 
 const [allCategory,setAllCategory]=useState([]);
 
-const [addCat,setAddCategory]=useState({})
+const [addCat,setAddCategory]=useState({
+    categoryName:'',
+    categoryImageUrl:'',
+    bannerImageUrl:''
+})
 
 useEffect(() => {
     fetchCategories();
@@ -47,9 +51,11 @@ const [updateCategory,setUpdateCategory]=useState({
     bannerImageUrl:''
 })
 
+//workiing .....
 const handelUpdateInput=(e)=>{
     const{name,value}=e.target
     setUpdateCategory({...updateCategory,[name]:value})
+    setAddCategory({...addCat,[name]:value})
 }
 
 const updateApi=()=>{
@@ -91,10 +97,8 @@ const deleteApi= async (id)=>{
 }
 
 
-
 // working.....
 const handelAddCategory=()=>{
-    setAddCategory(updateCategory)
     addCategory()
     fetchCategories();
 }
@@ -143,9 +147,9 @@ const handelUpdate=(e)=>{
                 </div>
                 {
                     updateCategory.id==null?
-                    <button onClick={()=>handelAddCategory()} className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Add</button>
+                    <button type='button' onClick={()=>handelAddCategory()} className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Add</button>
                     :    
-                    <button className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
+                    <button type='submit' className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Update</button>
                 }
              </form>
             <RiCloseLargeFill className='absolute top-3 right-4 h-5 w-5 hover:h-7 hover:w-7 animate-bounce' onClick={()=>updatePopup.current.style.top='-1000px'}/>
