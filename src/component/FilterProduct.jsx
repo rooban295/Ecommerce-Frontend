@@ -76,7 +76,7 @@ export const FilterProduct = () => {
             {
                 category.map((item,index)=>(
                     <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelCategory(item.id)} key={item.id}>
-                        <img src={`https://drive.google.com/thumbnail?id=${imageUrl(item.categoryImageUrl)}`} alt={item.name} className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
+                        <img src={`https://drive.google.com/uc?export=view&id=${imageUrl(item.categoryImageUrl)}`} alt={item.name} className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
                         <p className='text-slate-600 text-sm sm:md hover:text-lg hover:text-slate-800'>{item.categoryName}</p>
                     </div>
                 ))
@@ -91,7 +91,7 @@ export const FilterProduct = () => {
         {
         category.map((item,index)=>(
         <div key={item.id} className='w-full h-full' onClick={()=>handelCategory(item.id)}>
-        <SwiperSlide><img src={`https://drive.google.com/thumbnail?id=${imageUrl(item.bannerImageUrl)}`} alt='banner Img' className='w-full h-full cursor-pointer object-fill' onClick={()=>handelCategory(item.id)}/></SwiperSlide>
+        <SwiperSlide><img src={`https://drive.google.com/uc?export=view&id=${imageUrl(item.bannerImageUrl)}`} alt='banner Img' className='w-full h-full cursor-pointer object-fill' onClick={()=>handelCategory(item.id)}/></SwiperSlide>
         </div>
         ))
         }
