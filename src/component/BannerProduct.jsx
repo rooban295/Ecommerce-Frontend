@@ -96,7 +96,7 @@ export const BannerProduct = () => {
   return (
     <div className={`px-4 md:px-20 bg-slate-200 ${product.length ?'':'h-screen'}`}>
 
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
         
         {
         category.bannerImageUrl?   

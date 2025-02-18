@@ -187,7 +187,7 @@ const handelCartPlaceOrder=()=>{
   return (
     <div className={`px-2 md:px-10 bg-slate-200 relative ${cartitem.length >3 ? '':'h-screen'} `}>
 
-      <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+      <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
       
 
       <div className='absolute top-[-1000px] left-[25%] p-1 bg-slate-300 rounded-lg duration-75' ref={deleteMess} >

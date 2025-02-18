@@ -274,7 +274,7 @@ const removeOrderItem=(id)=>{
   return (
     <div className=''>
 
-      <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+      <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
       
         <h1 className=' mt-5 sm:mt-8 text-center text-xl'>Order Summary</h1>
     

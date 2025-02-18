@@ -140,7 +140,7 @@ export const Login = () => {
     <div>
         <div className='h-screen w-screen relative bg-gradient-to-r from-slate-700 to-slate-400'>
 
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} closeButton={false} hideProgressBar={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
         
         {
             loginfrom ?

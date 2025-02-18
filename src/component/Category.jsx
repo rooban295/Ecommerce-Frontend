@@ -131,7 +131,7 @@ const handelUpdate=(e)=>{
   return (
     <div className='px-2 sm:px-10 h-screen bg-slate-200 relative'>
         
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
 
         <h1 className='text-center pt-10 text-2xl uppercase'>Category</h1>
 
@@ -139,7 +139,7 @@ const handelUpdate=(e)=>{
             <form onSubmit={handelUpdate}  className='flex flex-col gap-5 p-2'>
                 <div className='mt-10'>
                 <label htmlFor="" className='text-slate-700'>Category Name</label>
-                <input type="text" name='categoryName' value={updateCategory.categoryName} onChange={handelUpdateInput} className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
+                <input type="text" name='categoryName' value={updateCategory.categoryName} onChange={handelUpdateInput}  className='p-1  pl-2 mt-2 outline-none border-none ring ring-blue-500 hover:ring-2 rounded-lg w-full'/>
                 </div>
                 <div className=''>
                 <label htmlFor="" className='text-slate-700'>Category Image</label>

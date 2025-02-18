@@ -106,7 +106,7 @@ export const Product = () => {
     <div className={`px-4 md:px-20 bg-slate-200 ${product.length > 0 ?'':'h-screen'}`}>
         
         
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
 
         <div className='pt-5'>
         <FilterProduct/>

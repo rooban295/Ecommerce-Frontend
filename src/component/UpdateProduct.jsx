@@ -104,7 +104,7 @@ export const UpdateProduct = () => {
   return (
     <div className='flex flex-col items-center relative bg-slate-200'>
 
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
         
         <h1 className='pt-8 text-2xl font-bold'>Update Product</h1>
 

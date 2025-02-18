@@ -60,7 +60,7 @@ export const ViewOrder = () => {
   return (
     <div className={`flex flex-col gap-7 pt-10 px-5 items-center bg-slate-200 ${orders.length >3 ?'':'h-screen'}`}>
 
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
 
         <h1 className='text-center text-xl'>Order</h1>
         {orders.map((order) =>

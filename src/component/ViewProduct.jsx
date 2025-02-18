@@ -111,7 +111,7 @@ export const ViewProduct = ({productId}) => {
   return (
     <div  className={`relative sm:h-screen bg-slate-200 `}>
 
-        <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
         
         <div ref={deletePopup} className={`absolute h-[200px] z-10 p-2 top-[100px] left-[10px] sm:left-[180px] md:left-[350px] lg:left-[600px] 2xl:left-[40%] bg-slate-300 shadow-2xl  blur-none rounded-lg ${pop ?'bolck':'hidden'}`}>
             <p className='pt-10'>Are you sure do you want to delete this product?</p>
