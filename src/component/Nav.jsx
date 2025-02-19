@@ -12,6 +12,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { setJwtToken } from '../slices/JwtSlices';
 import { IoSearchOutline } from "react-icons/io5";
 import { setSearch } from '../slices/Search';
+import { Button, notification, Space } from 'antd';
 
 
 export const Nav = () => {
@@ -34,8 +35,23 @@ export const Nav = () => {
 
     const [menuAcc,setMenuAcc] = useState(false)
 
+    const [api, contextHolder] = notification.useNotification();
+
     const searchDispatch=useDispatch();
 
+    const openNotificationWithIcon = (type) => {
+        api[type]({
+          message: 'Login Successfully',
+          description:'',
+          duration:2
+        });
+      };
+
+    useEffect(()=>{
+        if(jwt.message ==='Login successfully'){  
+           openNotificationWithIcon('success')
+        }
+    },[])
 
         useEffect(()=>{
 
@@ -47,7 +63,7 @@ export const Nav = () => {
                 }
             })
             .then((res)=>{
-                setUserInfo(res.data)
+            setUserInfo(res.data);
             })
             .catch((err)=>{
                 console.log(err);  
@@ -88,10 +104,6 @@ export const Nav = () => {
             })
         }
 
-        const imageUrl=(url)=>{
-            const newUrl=url.split("/"); 
-            return newUrl[5].toString();
-        }
 
         useEffect(()=>{
             if(jwt.message ==='Login successfully'){
@@ -158,7 +170,7 @@ export const Nav = () => {
 
   return (
     <div className='sticky top-0 z-50'>
-        
+        {contextHolder}
         <nav className='flex justify-between px-3 md:px-10 items-center py-3 bg-slate-300 shadow-xl'>  {/**max-md:hidden max-lg:px-1 */}
 
             <div  className='flex gap-2 md:gap-5'>
@@ -220,7 +232,7 @@ export const Nav = () => {
             <div className='relative'>
             <div className='bg-slate-300  flex flex-col gap-4 p-2 absolute top-[50px] right-[1px] rounded-md shadow-2xl w-[200px] z-50'>
                 <p className='font-bold text-center '> Account </p>
-                <p className={`shadow-xl cursor-pointer rounded text-green-600 px-2 ${accNotification ? 'block':'hidden'}`}> <span className='inline mr-3'>{userinfo.msg}</span> <IoMdClose className='inline w-5 h-5 text-slate-600  hover:text-slate-950 hover:h-6 hover:w-6' onClick={()=>{handeLoginNotication()}}/></p>
+                {/* <p className={`shadow-xl cursor-pointer rounded text-green-600 px-2 ${accNotification ? 'block':'hidden'}`}> <span className='inline mr-3'>{userinfo.msg}</span> <IoMdClose className='inline w-5 h-5 text-slate-600  hover:text-slate-950 hover:h-6 hover:w-6' onClick={()=>{handeLoginNotication()}}/></p> */}
                 <p className='tracking-normal'>{userinfo.fullName}</p>
                 <p>{userinfo.email}</p>
                 <p>{userinfo.role}</p>
@@ -233,10 +245,10 @@ export const Nav = () => {
            }
 
             <div className={`max-md:hidden absolute top-[-5px] left-[15px] ${accNotification ? 'block':'hidden'}`}> {/**  Account Notification*/}
-            <span className="relative flex size-3">
+            {/* <span className="relative flex size-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-900 opacity-75"></span>
                 <span className="relative inline-flex size-3 rounded-full bg-sky-700"></span>
-                </span>
+                </span> */}
             </div>
 
 
