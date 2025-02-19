@@ -116,7 +116,7 @@ export const Product = () => {
         
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-20'>
         {
-            product.filter((item)=>categoryId > 0 ? item.category.id===categoryId : item).map((item,index)=>(
+            product.filter((items)=>categoryId > 0 ? items.category.id===categoryId : items).map((item,index)=>(
 
                 <div className='mx-4 rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5 cursor-pointer' key={item.id}>
                 <div className=' mt-0 px-4 flex flex-col gap-5 items-center '>  

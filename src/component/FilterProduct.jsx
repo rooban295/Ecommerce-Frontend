@@ -65,10 +65,10 @@ export const FilterProduct = () => {
                 category.map((item,index)=>(
                     <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelBanner(item.id)} key={item.id}>
                       {item.categoryImageUrl !=''?
-                        <>
+                        <div className='mx-1'>
                         <img src={item.categoryImageUrl} alt={item.name} className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
-                        <p className='text-slate-600 text-sm sm:md hover:text-lg hover:text-slate-800'>{item.categoryName}</p>
-                        </>
+                        <p className='text-slate-600 text-[12px] sm:md hover:text-lg hover:text-slate-800'>{item.categoryName}</p>
+                        </div>
                         :<></>
                       }
                     </div>
@@ -76,22 +76,28 @@ export const FilterProduct = () => {
             }
             </div>
 
-        <Swiper spaceBetween={30} centeredSlides={true} autoplay={{delay: 2000 , disableOnInteraction: false,}} pagination={{clickable: true,}}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper mt-5 rounded-md shadow-2xl h-[250px] md:h-[450px]"
-      >
-        {
-        category.map((item,index)=>(
-        <div key={item.id} className='w-full h-full'>
-        {item.bannerImageUrl !='' ?
-        <SwiperSlide><img src={item.bannerImageUrl} alt='banner Img' className='w-full h-full cursor-pointer object-fill' onClick={()=>handelBanner(item.id)}/></SwiperSlide>
-        :<></>
-         }
-        </div>
-        ))
-        }
-      </Swiper>
+            <Swiper
+  spaceBetween={30}
+  centeredSlides={true}
+  autoplay={{ delay: 2000, disableOnInteraction: false }}
+  pagination={{ clickable: true }}
+  navigation={true}
+  modules={[Autoplay, Pagination, Navigation]}
+  className="mySwiper mt-5 rounded-md shadow-2xl h-[260px] md:h-[450px]"
+>
+  {category.map((item) =>
+    item.bannerImageUrl !== "" ? (
+      <SwiperSlide key={item.id || item.bannerImageUrl}>
+        <img
+          src={item.bannerImageUrl}
+          alt="banner Img"
+          className="w-full h-full cursor-pointer object-fill"
+          onClick={() => handelBanner(item.id)}
+        />
+      </SwiperSlide>
+    ) : null
+  )}
+</Swiper>
 
     </div>
   )
