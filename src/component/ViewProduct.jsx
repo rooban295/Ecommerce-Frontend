@@ -6,9 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { UpdateProduct } from './UpdateProduct'
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
+import { Button, message, Popconfirm } from 'antd'
 
 
-export const ViewProduct = ({productId}) => {
+
+export const ViewProduct = () => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
@@ -58,7 +60,7 @@ export const ViewProduct = ({productId}) => {
     const deleteProductRequest=async(productId)=>{         
         await axios.delete(`${baseUrl}/api/product/${productId}`)
         .then((res)=>{
-            toast.success("Product Deleted Successfully")
+            message.success('Product Deleted Successfully');
             setTimeout(()=>{
             home('/')
             },2000)
@@ -97,7 +99,8 @@ export const ViewProduct = ({productId}) => {
             }
         })
         .then((res)=>{
-            toast.success("Item Added to cart")
+            // toast.success("Item Added to cart")
+            message.success('Product Added to Cart');
             // cartNav('/cart') 
         })
         .catch((err)=>{
@@ -106,25 +109,24 @@ export const ViewProduct = ({productId}) => {
         })
     }
     }
+
+    const confirm = (proId) => {       
+        deleteProductRequest(proId)
+      };
+      const cancel = (e) => {
+        message.error('Click on No');
+      };
     
 
   return (
-    <div  className={`relative sm:h-screen bg-slate-200 `}>
+    <div  className={`relative sm:h-screen`}>
 
         <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
         
-        <div ref={deletePopup} className={`absolute h-[200px] z-10 p-2 top-[100px] left-[10px] sm:left-[180px] md:left-[350px] lg:left-[600px] 2xl:left-[40%] bg-slate-300 shadow-2xl  blur-none rounded-lg ${pop ?'bolck':'hidden'}`}>
-            <p className='pt-10'>Are you sure do you want to delete this product?</p>
-            <div className='flex gap-4 justify-center mt-5'>
-                <button onClick={()=>deleteProductRequest(product.id)} className='bg-green-500 hover:bg-green-600 px-3 rounded'>Yes</button>
-
-                <button onClick={()=>{handelDeleteButton()}} className='bg-red-500 hover:bg-red-600 px-3 rounded'>NO</button>
-            </div>
-        </div>
-
+       
         <h1 className='text-center text-2xl pt-10 font-bold'>View Product</h1>
             {
-        <div className={`mt-10 flex flex-col sm:flex-row w-[90%] py-10 items-center justify-center gap-10  bg-slate-300  mx-auto rounded-xl shadow-xl p-2 mb-10 ${pop?'blur-xl':''}`}>
+        <div className={`mt-10 flex flex-col sm:flex-row w-[90%] py-10 items-center justify-center gap-10 mx-auto rounded-xl shadow-xl inset-shadow-sm p-2 mb-10 ${pop?'blur-xl':''}`}>
             
             <img src={product.productImg} alt='google drive img' className=''/>
 
@@ -137,8 +139,10 @@ export const ViewProduct = ({productId}) => {
                <div className='flex gap-2 text-white'>
                <button onClick={()=>handelCartButton(product.id)} className='rounded-md p-1 bg-green-500 hover:bg-green-700  text-sm  md:text-md'>Add To Cart</button>
                <div className={`${admin ? '':'hidden'} flex gap-2`}>
-               <button onClick={()=>{handelUpdateButton(product.id)}} className='rounded-md p-1 bg-blue-500 hover:bg-blue-700 text-sm md:text-md'>Update Product</button>
-               <button onClick={()=>{handelDeleteButton()}} className='rounded-md p-1 bg-neutral-500 hover:bg-neutral-700 text-sm md:text-md'>Delete Product</button>
+               <button onClick={()=>{handelUpdateButton(product.id)}} className='rounded-md p-1 text-blue-500 border border-blue-500 text-sm md:text-md'>Update Product</button>
+               <Popconfirm placement="topLeft" title="Delete the task" description="Are you sure to delete this task?" onConfirm={()=>confirm(product.id)} onCancel={cancel} okText="Yes" cancelText="No">
+                <Button danger>Delete</Button>
+                </Popconfirm>
                </div>
 
                </div>

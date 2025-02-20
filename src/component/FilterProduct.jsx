@@ -60,14 +60,14 @@ export const FilterProduct = () => {
   return (
     <div className=''>
       
-            <div className='flex justify-evenly flex-wrap shadow-2xl rounded-sm bg-slate-300  py-3'>
+            <div className='flex justify-evenly flex-wrap shadow-2xl rounded-lg bg-white py-3 mt-1 inset-shadow-sm'>
             {
                 category.map((item,index)=>(
                     <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelBanner(item.id)} key={item.id}>
                       {item.categoryImageUrl !=''?
                         <div className='mx-1'>
                         <img src={item.categoryImageUrl} alt={item.name} className='h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] object-contain rounded-full '/>
-                        <p className='text-slate-600 text-[12px] sm:md hover:text-lg hover:text-slate-800'>{item.categoryName}</p>
+                        <p className='text-slate-600 text-[12px] md:text-sm  hover:text-slate-800'>{item.categoryName}</p>
                         </div>
                         :<></>
                       }

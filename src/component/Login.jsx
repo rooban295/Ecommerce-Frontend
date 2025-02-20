@@ -1,15 +1,11 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { setJwtToken } from '../slices/JwtSlices';
-import { MdOutlineMailLock } from "react-icons/md";
-import { TbLockPassword } from "react-icons/tb";
 import { setAdmin } from '../slices/Admin';
 import { ToastContainer, Zoom } from 'react-toastify';
-import { message } from 'antd';
-import {Button,Form,Input,Select,} from 'antd';
-import { Alert } from 'antd';
+import {Button,Form,Input,Select,notification,message} from 'antd';
 
 
 export const Login = () => {
@@ -90,6 +86,8 @@ const tailFormItemLayout = {
 };
   const [form] = Form.useForm();
 
+  const [forms] = Form.useForm();
+
   const onFinish = (values) => {
     createAccountApi(values);
   };
@@ -140,14 +138,28 @@ const tailFormItemLayout = {
         })
     }
 
+    const [api,contextHolder2] = notification.useNotification();
+
+    const openNotification = () => {
+      api.open({
+        message: 'Hello, User',
+        description:
+          'To create an account, click on the  "Register Account" button and fill in the required details, such as your name, email  and password. Make sure to use a valid email, as you may need to verify it. Choose a strong password for security. Once you submit the form, click on "login" ',
+        duration: 0,
+      });
+    };
+
 
   return (
     <div>
         <div className='h-screen w-screen relative bg-gradient-to-r bg-slate-200 '> {/**from-slate-700 to-slate-400 */}
-
-        <div className='bg-red-500 '>
+  
+        {contextHolder2}
         {contextHolder}
-        </div>
+     
+        <nav className='h-12 shadow flex justify-end items-center'>
+        <a className='px-10 text-sm text-slate-500' onClick={openNotification}>Need Help ?</a>
+        </nav>
 
         <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} closeButton={false} hideProgressBar={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
         
@@ -155,7 +167,7 @@ const tailFormItemLayout = {
 
         loginfrom ?
    
-        <Form  className='outline-none flex flex-col gap-2 rounded-lg absolute top-[25%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl' {...formItemLayout} form={form} name="register" onFinish={onLogin}
+        <Form  {...formItemLayout} form={forms} name="register" onFinish={onLogin}  className='outline-none flex flex-col rounded-lg absolute top-[25%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'
         initialValues={{
           residence: ['zhejiang', 'hangzhou', 'xihu'],
           prefix: '86',
@@ -166,7 +178,7 @@ const tailFormItemLayout = {
         }}
         scrollToFirstError
       >
-        <p className='text-slate-900 text-3xl animate-bounce  my-5'>Hey, Welcome back </p>
+        <p className='text-slate-900 text-3xl animate-bounce  my-10'>Hey, Welcome back </p>
 
         <Form.Item
           name="userName"
@@ -200,7 +212,7 @@ const tailFormItemLayout = {
         </Form.Item>
   
         <Form.Item className='w-full '> 
-          <button onClick={handelSignInButton} className=' text-slate-500 pl-12 cursor-pointer hover:text-slate-700'>Register account</button>
+          <button onClick={handelSignInButton} className=' text-slate-500 pl-14 cursor-pointer hover:text-slate-700'>Register account</button>
         </Form.Item>
   
         <Form.Item {...tailFormItemLayout}>
@@ -317,7 +329,7 @@ const tailFormItemLayout = {
       </Form.Item>
 
       <Form.Item className='w-full '> 
-        <button onClick={handelLoginInButton}  className=' text-slate-500 pl-12 cursor-pointer hover:text-slate-700'>Login account</button>
+        <button onClick={handelLoginInButton}  className=' text-slate-500 pl-14 cursor-pointer hover:text-slate-700'>Login account</button>
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>

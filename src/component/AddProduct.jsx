@@ -1,15 +1,17 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react'
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import { GrView } from "react-icons/gr";
+import React, { useEffect, useState } from 'react'
+
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, Zoom, toast } from 'react-toastify';
+
+import { ToastContainer, Zoom } from 'react-toastify';
+
+import {Button,Form,Input,Select,message ,InputNumber, Popover  } from 'antd';
 
 export const AddProduct = () => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
-    const[preview ,setPreview]=useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
      
     const home=useNavigate();
 
@@ -36,88 +38,186 @@ export const AddProduct = () => {
     },[])
 
 
-    const handelInput=(e)=>{
-
-        const { name , value } = e.target;
-        
-        if(name==='category'){
-
-            setProduct({ ...product, category: { id: parseInt(value) } });
-        }
-        else{
-            
-            setProduct({...product , [name] : value} )
-        }
-
-    }
     
     //add Product
     const AddProduct=(product)=>{
         
         axios.post(`${baseUrl}/api/product/add`,product)
-        .then((res)=>{
-            toast.success("Product Added Successfully")
-            setTimeout(()=>{
+        .then(()=>{
+            messageApi.open({type:'success',content:"Product Added Successfully", className:'text-green-500'})
             home('/')
-            },2000)
+            // setTimeout(()=>{
+            // },2000)
         })
         .catch((err)=>{
             console.log(err);   
         })
     }
 
-    const handelsubmit=(e)=>{
-        e.preventDefault(); 
-        AddProduct(product)     
+
+    const { Option } = Select;
+    
+    const formItemLayout = {
+      labelCol: {
+        xs: {
+          span: 24,
+        },
+        sm: {
+          span: 8,
+        },
+      },
+      wrapperCol: {
+        xs: {
+          span: 24,
+        },
+        sm: {
+          span: 16,
+        },
+      },
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 16,
+          offset: 8,
+        },
+      },
+    };
+      const [Products] = Form.useForm();
+    
+      const onProduct = (pro) => {
+        pro.category = {id : parseInt(pro.category) }
+        AddProduct(pro)
+        Products.resetFields();
+        setProductImageUrl('')        
+    };
+
+    const [productImageUrl,setProductImageUrl]=useState('')
+    
+    const handelProductImg=(e)=>{ 
+      setProductImageUrl(e.target.value)
     }
+
 
   return (
     
-    <div className='flex flex-col items-center relative bg-slate-200'>
+    <div className=''>
 
-        <ToastContainer position={'top-center'} closeOnClick={true} closeButton={false} hideProgressBar={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+    {contextHolder}
+
+    <ToastContainer position={'top-center'} closeOnClick={true} closeButton={false} hideProgressBar={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
+
+
+    <Form className='flex flex-col items-center' {...formItemLayout} form={Products} name="register" onFinish={onProduct}
+      initialValues={{
+        residence: ['zhejiang', 'hangzhou', 'xihu'],
+        prefix: '86',
+      }}
+      style={{
+        maxWidth: 600,
+        color:'blue'
+      }}
+      scrollToFirstError
+    >
         
-        <h1 className='my-2 text-2xl font-bold mt-5'>Add Product</h1>
-
-        <form onSubmit={handelsubmit} className='flex flex-col gap-5 p-5 mt-5 w-[90%] md:w-[70%] rounded-lg shadow-2xl bg-slate-300 mb-10'>
-
-            
-            <div className='flex justify-between gap-4'>
-
-            <div className='relative w-full'>
-            <label htmlFor="productImg">Image url</label>
-            <input type="url" name='productImg' onChange={handelInput} value={product.productImg}  className='mt-4 w-full outline-none ring-2 ring-slate-500 border-none p-2 rounded pl-4' placeholder='google drive Image link' required/>
-            <GrView className='absolute right-4 top-13' onClick={()=>{setPreview(!preview)}}/>
-            </div>
-
-            <div className={`p-2 bg-neutral-200 rounded-2xl ${preview?'block':'hidden'}`}>
-            <img src={product.productImg} alt='google drive img loading' className='mt-5 '/>
-            </div>
-
-            </div>
-
-            <label htmlFor="productname">Product Name</label>
-            <input type="text" name='productName' value={product.productName} onChange={handelInput} placeholder='Enter a Product name' className='outline-none ring-2 ring-slate-500 border-none p-2 rounded pl-4' required/>
-
-            <label htmlFor="description">Product Description</label>
-            <textarea rows="4" cols="50" name='description' value={product.description} onChange={handelInput} placeholder='Enter a Product description' className='outline-none ring-2 ring-slate-500 border-none p-2 rounded pl-4' required/>
-
-            <label htmlFor="productPrice">Product Price</label>
-            <input type="number" name='productPrice' value={product.productPrice} onChange={handelInput} className='outline-none ring-2 ring-slate-500 border-none p-2 rounded pl-4' required/>
+      <Popover placement="left" content={<img className='h-23 w-23' src={productImageUrl} alt="Product Image" />}  title="Product Image">
+        <Form.Item
+        className='w-full flex justify-center'
+        name="productImg"
+        tooltip="What do you want others to call you?"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Enter Product Image url',
+            whitespace: true,
+          },
+          {
+            // min: 3,
+            message: 'Enter min 3 Charcter',
+          },
+        ]}
+        validateFirst
+      >
+       <Input placeholder='Enter Your Product Image Url'  className='!text-md !w-[300px] h-9' onChange={handelProductImg}/>
+      </Form.Item >
+      </Popover>
 
 
-            <label htmlFor="category">Category</label>
-            <select name='category' value={product.category.id||""} onChange={handelInput} className='outline-none ring-2 ring-slate-500 border-none p-2 rounded pl-4' required>
-                <option value="">Select the Category</option>
-                {
-                    AllCategoryList.map((item)=>(
-                        <option value={item.id} key={item.id} className=''>{item.categoryName}</option>
-                    ))
-                }
-            </select>
-        
-            <button className='border p-2 rounded-lg w-fit mx-auto bg-slate-600 hover:bg-slate-800 text-white' type='submit'>Add Product</button>
-        </form>
+      <Form.Item
+        className='w-full flex justify-center'
+        name="productName"
+        tooltip="What do you want others to call you?"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Enter Product Name',
+            whitespace: true,
+          },
+          {
+            min: 3,
+            message: 'Enter min 4 Charcter',
+          },
+        ]}
+        validateFirst
+      >
+      <Input placeholder='Enter Your Product Name'  className=' !text-md !w-[300px] h-9' />
+
+      </Form.Item >
+
+      <Form.Item
+        hasFeedback
+        name="description"
+        rules={[{ required: true, message: 'Please Enter Description' }]}
+      >
+      <Input.TextArea placeholder='Enter Product Description' className='!text-md !w-[300px]'/>
+      </Form.Item>
+
+    <Form.Item
+      hasFeedback
+      name='productPrice'
+      rules={[
+        {
+          type: 'number',
+          required: true,
+          message: 'Please Enter Price',
+        },
+      ]}
+    >
+      <InputNumber placeholder='Enter Product price' className='!text-md !w-[300px] h-9'/>
+    </Form.Item>
+
+      <Form.Item
+        name="category"
+        rules={[
+          {
+            required: true,
+            message: 'Please select Category',
+          },
+        ]}
+        hasFeedback
+      >
+        <Select placeholder="select your Category" className=' !text-md !w-[300px] !bg-slate-100 rounded-2xl h-9'>
+        {
+        AllCategoryList.map((item)=>(
+        <Option value={item.id}>{item.categoryName}</Option>
+        ))
+        }
+        </Select>
+      </Form.Item>
+
+      <Form.Item {...tailFormItemLayout}>
+        <Button className='mr-35' type="primary" htmlType="submit">
+          Add Product
+        </Button>
+      </Form.Item>
+
+    </Form>
 
     </div>
   )

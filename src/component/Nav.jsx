@@ -12,7 +12,9 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { setJwtToken } from '../slices/JwtSlices';
 import { IoSearchOutline } from "react-icons/io5";
 import { setSearch } from '../slices/Search';
-import { Button, notification, Space } from 'antd';
+import { Button, notification, Space , ConfigProvider, Flex, Popover, Popconfirm , message } from 'antd';
+import { AddProduct } from './AddProduct';
+
 
 
 export const Nav = () => {
@@ -124,9 +126,6 @@ export const Nav = () => {
           },[cartTotalItem,jwt])
 
           const logNav=useNavigate();
-        const handelLogout=()=>{
-            logNav('/login')
-        }
 
     const[accNotification,setAccNotification]=useState(true);
 
@@ -152,10 +151,9 @@ export const Nav = () => {
       };
 
       //logout code
-      const handleLogout = () => { 
-        jwtDispatch(setJwtToken({}))
+    const handleLogout = () => { 
+     jwtDispatch(setJwtToken({}))
     }
-    const OrderNav=useNavigate();
 
     const viewOrder=useNavigate();
 
@@ -167,35 +165,85 @@ export const Nav = () => {
         viewSearch('/search')
     }
 
+      const cancel = () => {
+        message.error('Click on No');
+      };
 
+//............................
+
+  const [clicked, setClicked] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const handleHoverChange = (open) => {
+    setHovered(open);
+    setClicked(false);
+  };
+  const handleClickChange = (open) => {
+    setHovered(false);
+    setClicked(open);
+  };
+
+  const hoverContent = <div>{userinfo.email}</div>;
+
+  const clickContent = 
+  <div>
+  <p>{userinfo.fullName}</p>
+  <p className='my-2'>{userinfo.email}</p>
+  <p className='my-2'>{userinfo.role}</p>
+  <p className='my-2 hover:text-red-500' onClick={()=>viewOrder('/vieworder')}>Orders</p>
+  <Popconfirm placement="left" title="Logout" description="Are you sure to do want to Logout"
+  onConfirm={()=>handleLogout()}
+  onCancel={cancel}
+  okText="Yes"
+  cancelText="No">
+  <p className='my-2 hover:text-red-500'>Logout</p>
+</Popconfirm>
+</div>
+
+
+const [clicked2, setClicked2] = useState(false);
+const [hovered2, setHovered2] = useState(false);
+const handleHoverChange2 = (open) => {
+  setHovered2(open);
+  setClicked2(false);
+};
+const handleClickChange2 = (open) => {
+  setHovered2(false);
+  setClicked2(open);
+};
+
+const hoverContent2 = <div>Add Product</div>;
+
+const addProductContent = 
+<div>
+<AddProduct/>
+</div>
+
+    
   return (
     <div className='sticky top-0 z-50'>
         {contextHolder}
-        <nav className='flex justify-between px-3 md:px-10 items-center py-3 bg-slate-300 shadow-xl'>  {/**max-md:hidden max-lg:px-1 */}
+        <nav className='flex justify-between px-3 md:px-10 xl:px-20 items-center py-3 bg-white shadow-sm'>  {/**max-md:hidden max-lg:px-1 */}
 
             <div  className='flex gap-2 md:gap-5'>
 
                 <div>
-                <Link to={`/`} className='hover:text-lg hidden md:block text-slate-600 hover:text-slate-800'>Home</Link>
+                <Link to={`/`} className='hidden md:block  hover:text-slate-800'>Home</Link> {/**text-slate-600 */}
                 <Link to={`/`} className=''><GrHomeRounded className='hidden max-md:block h-5 w-6 mt-2 text-slate-700 hover:text-slate-900'/></Link>
                 </div>
 
-                <div className={`${admin ? '':'hidden'}`}>
-                <Link to='product' className={`hover:text-lg hidden md:block text-slate-600 hover:text-slate-800`}>Add product</Link>
-                </div>
-
-                <div className=''>
+               
+                <div>
                 <div className='flex relative'>
-                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-slate-500 hover:ring-2 pl-2 rounded-lg p-1 w-[230px] sm:w-[300px] md:w-[350px]'  placeholder='Search Product'/>
+                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-blue-500 hover:ring-2 pl-5 rounded-lg p-1 w-[230px] sm:w-[300px] md:w-[350px] xl:w-[600px]'  placeholder='Search Product'/>
                 <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-2 top-1 text-slate-400 hover:text-slate-600 ' onClick={handelSearchList}/>
                 </div>
                 {
                     dropDownsearch && (
-                        <ul className='bg-slate-200 rounded-md absolute left-7 md:left-25 lg:left-50 top-[70px] w-[300px] p-2 duration-75 shadow-2xl'>
+                        <ul className='bg-white rounded-md absolute left-7 md:left-20 lg:left-25 top-[70px] w-[300px] xl:w-[600px] p-2 duration-75 shadow-2xl'>
                             {
                                 searchResult.length > 0 ?(
                                 searchResult.map((item,index)=>(
-                                    <li key={index} className='flex justify-between my-5 hover:bg-slate-400 px-2 rounded-sm cursor-pointer'>
+                                    <li key={index} className='flex justify-between my-5 hover:bg-slate-200 px-2 rounded-sm cursor-pointer'>
                                         <p onClick={()=>(viewNav(`/view/${item.id}`))}>{item.productName}</p>
                                         <img src={item.productImg} alt={item.name} className='h-[50px] w-[50px'/>
                                     </li>
@@ -208,6 +256,10 @@ export const Nav = () => {
                 }
                 </div>
 
+            </div>
+
+
+            <div className='flex gap-4 relative'>
 
             <div className='hidden sm:block'>
             <div className='flex gap-5'>  
@@ -216,44 +268,45 @@ export const Nav = () => {
             <Link to='/category' className={`hover:text-lg hidden md:block text-slate-600 hover:text-slate-800`}>Add Category</Link>
             </div>
 
+            <div className={`${admin ? '':'hidden'}`}>
+                {/* <Link to='product' className={`hover:text-lg hidden md:block text-slate-600 hover:text-slate-800`}>Add product</Link> */}
+            <Popover content={hoverContent2} title="Add Product" trigger="hover" open={hovered2} onOpenChange={handleHoverChange2}>
+            <Popover
+            content={
+            <div>
+            {addProductContent}
             </div>
-            </div>  
-
-            </div>
-
-            <div className='flex gap-4 relative'>
-
-            <button onClick={()=>{setAccountPopup(!accountPopup)}} onFocus={()=>{setAccountPopup(false)}} onBlur={()=>{setTimeout(()=>{setAccountPopup(false)},200)}}> <VscAccount className='max-md:hidden h-6 w-6 cursor-pointer text-slate-500 hover:text-slate-800'/></button>
-
-            {   
-            // accountPopup 
-
-            accountPopup ?
-            <div className='relative'>
-            <div className='bg-slate-300  flex flex-col gap-4 p-2 absolute top-[50px] right-[1px] rounded-md shadow-2xl w-[200px] z-50'>
-                <p className='font-bold text-center '> Account </p>
-                {/* <p className={`shadow-xl cursor-pointer rounded text-green-600 px-2 ${accNotification ? 'block':'hidden'}`}> <span className='inline mr-3'>{userinfo.msg}</span> <IoMdClose className='inline w-5 h-5 text-slate-600  hover:text-slate-950 hover:h-6 hover:w-6' onClick={()=>{handeLoginNotication()}}/></p> */}
-                <p className='tracking-normal'>{userinfo.fullName}</p>
-                <p>{userinfo.email}</p>
-                <p>{userinfo.role}</p>
-                <Link to='/vieworder' className=' hover:text-slate-600'>Orders</Link>
-                <p onClick={handleLogout} className='rounded bg-slate-600 hover:bg-slate-800 p-1 text-white w-fit'>Logout <span className='ml-2'><IoLogOutOutline className='inline h-5 w-5'/></span></p>         
-            </div>
+            }
+            title="Add Product"
+            trigger="click"
+            open={clicked2}
+            onOpenChange={handleClickChange2}>
+            <p>Add Product</p>
+            </Popover>
+            </Popover>
             </div> 
-            :
-            <></>
-           }
 
-            <div className={`max-md:hidden absolute top-[-5px] left-[15px] ${accNotification ? 'block':'hidden'}`}> {/**  Account Notification*/}
-            {/* <span className="relative flex size-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-900 opacity-75"></span>
-                <span className="relative inline-flex size-3 rounded-full bg-sky-700"></span>
-                </span> */}
+            </div>
             </div>
 
 
+            
+            <Popover content={hoverContent} title="Login Info" trigger="hover" open={hovered} onOpenChange={handleHoverChange}>
+            <Popover
+            content={
+            <div>
+            {clickContent}
+            </div>
+            }
+            title="Login Info"
+            trigger="click"
+            open={clicked}
+            onOpenChange={handleClickChange}>
+            <VscAccount className='max-md:hidden h-6 w-6 cursor-pointer text-slate-500 hover:text-slate-800'/>
+            </Popover>
+            </Popover>
 
-
+  
             <div className='relative'>  {/** Shoping cart */}
             <Link to='cart'><LuShoppingCart className='h-6 w-6 text-slate-600 hover:text-slate-800'/></Link>
             {
@@ -307,7 +360,6 @@ export const Nav = () => {
 
 
             </div>
-
 
             </div>
             
