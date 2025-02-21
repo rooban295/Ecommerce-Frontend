@@ -7,7 +7,7 @@ import { FilterProduct } from './FilterProduct'
 import { ToastContainer, Zoom } from 'react-toastify';
 import { Button , message} from 'antd';
 
-export const Product = () => {
+export const Product = ({product},{cartItems}) => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
@@ -19,29 +19,27 @@ export const Product = () => {
 
     const cartNav=useNavigate();
 
-    const [selectedCategory,setSelectedCategory]=useState(0);
-
-    const[product,setProduct]=useState([])
+    // const[product,setProduct]=useState([])
 
     const [messageApi, contextHolder] = message.useMessage();
+
+   
     
 
-    const allproduct=()=>{
-        axios.get(`${baseUrl}/api/product`)
-        .then((res)=>{
-            setProduct(res.data);
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    }
+    // useEffect(()=>{
+    //   allproduct();
+    // },[])
 
+    // const allproduct=()=>{
+    //     axios.get(`${baseUrl}/api/product`)
+    //     .then((res)=>{
+    //         setProduct(res.data);
+    //     })
+    //     .catch((err)=>{
+    //         console.log(err)
+    //     })
+    // }
 
-    useEffect(()=>{
-        allproduct();
-    },[selectedCategory])
-
-    
 
     const handelProductClick=(id)=>{
         navigate(`/view/${id}`);
@@ -70,8 +68,8 @@ export const Product = () => {
             }
         })
         .then((res)=>{
-            messageApi.open({type: 'success', content: 'Product Added to Cart',});
-            // cartNav('/cart')   
+            messageApi.open({type: 'success',className:'mt-13 text-green-500', content: 'Product Added to Cart',} );
+            // cartItems   
         })
         .catch((err)=>{
             console.log(err);  
@@ -112,7 +110,7 @@ export const Product = () => {
         
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-20'>
         {
-            product.filter((items)=>categoryId > 0 ? items.category.id===categoryId : items).map((item,index)=>(
+            product.map((item,index)=>(    
 
                 <div className='mx-4 rounded-2xl shadow-2xl hover:shadow-slate-400 bg mb-5 cursor-pointer' key={item.id}>
                 <div className=' mt-0 px-4 flex flex-col gap-5 items-center '>  

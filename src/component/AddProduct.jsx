@@ -7,13 +7,13 @@ import { ToastContainer, Zoom } from 'react-toastify';
 
 import {Button,Form,Input,Select,message ,InputNumber, Popover  } from 'antd';
 
-export const AddProduct = () => {
+export const AddProduct = ({allproduct}) => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const [messageApi, contextHolder] = message.useMessage();
      
-    const home=useNavigate();
+    const productNav = useNavigate();
 
     const[product,setProduct]=useState({
         productName:'',
@@ -27,12 +27,14 @@ export const AddProduct = () => {
 
 
     const[AllCategoryList,setAllCategoryList]=useState([]);
+
     const allCategory=()=>{
         axios.get(`${baseUrl}/category`)
         .then((res)=>{
             setAllCategoryList(res.data);
         })
     }
+
     useEffect(()=>{
         allCategory();
     },[])
@@ -44,10 +46,11 @@ export const AddProduct = () => {
         
         axios.post(`${baseUrl}/api/product/add`,product)
         .then(()=>{
-            messageApi.open({type:'success',content:"Product Added Successfully", className:'text-green-500'})
-            home('/')
-            // setTimeout(()=>{
-            // },2000)
+            messageApi.open({type:'success',content:"Product Added Successfully", className:'text-green-500 mt-13'})
+            // allproduct()
+            setTimeout(()=>{
+            
+            },2000)
         })
         .catch((err)=>{
             console.log(err);   
@@ -105,12 +108,14 @@ export const AddProduct = () => {
 
   return (
     
-    <div className=''>
+    <div className='h-screen sm:h-full'>
 
     {contextHolder}
 
+
     <ToastContainer position={'top-center'} closeOnClick={true} closeButton={false} hideProgressBar={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
 
+    <p className='block sm:hidden my-4 text-center'>Add Product</p>
 
     <Form className='flex flex-col items-center' {...formItemLayout} form={Products} name="register" onFinish={onProduct}
       initialValues={{
@@ -205,7 +210,7 @@ export const AddProduct = () => {
         <Select placeholder="select your Category" className=' !text-md !w-[300px] !bg-slate-100 rounded-2xl h-9'>
         {
         AllCategoryList.map((item)=>(
-        <Option value={item.id}>{item.categoryName}</Option>
+        <Option key={item.id} value={item.id}>{item.categoryName}</Option>
         ))
         }
         </Select>

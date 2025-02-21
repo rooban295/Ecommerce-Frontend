@@ -151,8 +151,8 @@ const tailFormItemLayout = {
 
 
   return (
-    <div>
-        <div className='h-screen w-screen relative bg-gradient-to-r bg-slate-200 '> {/**from-slate-700 to-slate-400 */}
+    <div className=''>
+        <div className='h-screen w-screen relative bg-gradient-to-r bg-slate-100 '> {/**from-slate-700 to-slate-400 */}
   
         {contextHolder2}
         {contextHolder}

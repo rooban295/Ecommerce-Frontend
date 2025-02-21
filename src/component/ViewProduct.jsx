@@ -54,7 +54,6 @@ export const ViewProduct = () => {
 
     const handelUpdateButton =(productId)=>{
         updateProduct(`/updateproduct/${id}`)
-        // updatePopup.current.style.top='40px'
     }
 
     const deleteProductRequest=async(productId)=>{         

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { FilterProduct } from './FilterProduct';
+import { Button,message} from 'antd';
 
 export const SearchProduct = () => {
 
@@ -16,10 +16,7 @@ export const SearchProduct = () => {
 
   const searchProduct=useSelector((state)=>state.search.searchProduct)
 
-  const imageUrl=(url)=>{
-    const newUrl=url.split("/"); 
-    return newUrl[5].toString();
-}
+  const [messageApi, contextHolder] = message.useMessage();
 
 const handelProductClick=(id)=>{
   navigate(`/view/${id}`);
@@ -47,7 +44,8 @@ const addToCart=(cartitems)=>{
       }
   })
   .then((res)=>{
-    cartNav('/cart')   
+    messageApi.open({type: 'success',className:'mt-13 text-green-500', content: 'Product Added to Cart',} );
+    // cartNav('/cart')   
   })
   .catch((err)=>{
       console.log(err); 
@@ -57,17 +55,17 @@ const addToCart=(cartitems)=>{
 
   
   return (
-    <div className={`px-6 md:px-20 bg-slate-200 ${searchProduct.length > 0 ?'':'h-screen'}`}>
+    <div className={`px-6 md:px-20 ${searchProduct.length > 0 ?'':'h-screen'}`}>
 
-      {/* <FilterProduct/> */}
+      {contextHolder}
 
-      <h1 className="text-3xl text-center pt-10">Search Result</h1>
+    <h1 className="text-3xl text-center pt-10">Search Result</h1>
         
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-20'>
         {
             searchProduct.map((item,index)=>(
 
-                <div className='rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5 cursor-pointer' key={index}>
+                <div className='rounded-2xl shadow-xl hover:shadow-slate-400  mb-5 cursor-pointer' key={index}>
                 <div  className=' mt-0 px-4 flex flex-col gap-5 items-center '>  
                     
                     <img onClick={()=>{handelProductClick(item.id)}} src={item.productImg} alt={item.name} className='mt-5 h-[180px] sm:h-[200px]'/>
@@ -76,7 +74,7 @@ const addToCart=(cartitems)=>{
                     <h1 className='text-slate-700'>{item.productName}</h1>
                     <p className='text-justify'>{item.description}</p>
                     <h1 className='font-bold'><span>₹</span>{item.productPrice}</h1>
-                    <button  className=' bg-slate-400 rounded-lg p-1 px-3 my-5 hover:bg-slate-600' onClick={()=>handelCartButton(item.id)}>Add to cart</button>
+                    <Button type="primary" className='my-5' onClick={()=>{handelCartButton(item.id)}}>Add to Cart</Button>
                     </div>
                 </div>  
                 </div>

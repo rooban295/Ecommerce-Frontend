@@ -15,13 +15,20 @@ import { ViewOrder } from './component/ViewOrder'
 import { Category } from './component/Category'
 import { SearchProduct } from './component/SearchProduct'
 import { BannerProduct } from './component/BannerProduct'
+import axios from 'axios'
+
 
 function App() {
+
+const baseUrl=import.meta.env.VITE_BASE_URL;
   
 const jwt = useSelector((state)=>state.jwt.jwtToken)
 
+const[product,setProduct]=useState([])
+
 const[login,setLogin]=useState(true);
 
+const[cartitem,setCartItems]=useState([])
 
 useEffect(()=>{
   if(jwt.message ==='Login successfully'){
@@ -33,6 +40,46 @@ useEffect(()=>{
 },[jwt])
 
 
+
+
+ useEffect(()=>{
+  allproduct();
+  cartItems()
+ },[product])
+
+
+ const allproduct=()=>{
+    axios.get(`${baseUrl}/api/product`)
+    .then((res)=>{
+        setProduct(res.data);
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
+
+
+//cart
+const cartItems=()=>{  
+  if(jwt.message ==='Login successfully'){
+
+    axios.get(`${baseUrl}/api/cart/getcartitem`,{
+      headers:{
+        Authorization: `Bearer ${jwt.jwt}`
+      }
+    })
+    .then((res)=>{
+    setCartItems(res.data)
+  })
+  .catch((err)=>{
+    console.log(err); 
+  })
+}
+}
+
+
+
+
   return (
     <>
     {   
@@ -40,22 +87,22 @@ useEffect(()=>{
     login ?
 
     (<BrowserRouter>
-    <Nav jwtToken={jwt}/>
+    <Nav jwtToken={jwt} cartitem={cartitem} allproduct={allproduct}/>
     <Routes>
       <Route path='/login' element={<Login/>}></Route>  
-      <Route path='/'  element={<Product/>}></Route>  
-      <Route path='/product' element={<AddProduct />}></Route>
+      <Route path='/'  element={<Product product={product}/>}></Route>  
+      <Route path='/product' element={<AddProduct allproduct={allproduct} cartItems={cartItems}/>}></Route>
       <Route path='/filter/:id' element={<FilterProduct/>}></Route>
       <Route path='/view/:id' element={<ViewProduct/>}></Route>
       <Route path='/updateproduct/:id' element={<UpdateProduct/>}></Route>
-      <Route path='/cart' element={<Cart/>}></Route>
+      <Route path='/cart' element={<Cart cartitem={cartitem} cartItems={cartItems}/>}></Route>
       <Route path='/order' element={<Order/>}></Route>
       <Route path='/vieworder' element={<ViewOrder/>}></Route>
       <Route path='/category' element={<Category/>}></Route>
       <Route path='/search' element={<SearchProduct/>}></Route>
       <Route path='/bannerproduct' element={<BannerProduct/>}></Route>
     </Routes>
-    <Footer/>
+    {/* <Footer/> */}
     </BrowserRouter>)
     :
     
