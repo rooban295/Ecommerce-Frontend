@@ -139,7 +139,7 @@ const tailFormItemLayout = {
         {contextHolder2}
         {contextHolder}
      
-        <nav className='h-12 shadow flex justify-between items-center px-5'>
+        <nav className='h-12 shadow flex justify-between items-center xl:px-5'>
         <Popover content={<QRCode type="canvas" value="ecommerce-rho-khaki.vercel.app" />} title="E-commerce">
         <div className='h-25 w-25'>
         <img className='object-fill' src="https://res.cloudinary.com/depfu1w0f/image/upload/v1740230755/Logo_jhvjoj.png" alt="" />
