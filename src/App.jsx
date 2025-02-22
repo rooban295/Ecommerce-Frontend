@@ -104,7 +104,7 @@ const cartItems=()=>{
       <Route path='/bannerproduct' element={<BannerProduct/>}></Route>
       <Route path='/orderresult' element={<OrderResult/>}></Route>
     </Routes>
-    {/* <Footer/> */}
+    <Footer/>
     </BrowserRouter>)
     :
     

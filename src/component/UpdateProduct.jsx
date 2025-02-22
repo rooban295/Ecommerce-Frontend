@@ -5,35 +5,37 @@ import { ToastContainer, Zoom, toast } from 'react-toastify';
 import {Button,Form,Input,Select,InputNumber, Popover ,message } from 'antd';
 
 export const UpdateProduct = () => {
-
-    const baseUrl=import.meta.env.VITE_BASE_URL;
-
-    const home=useNavigate();
-    
-    const {id} =useParams();
-
-    const[AllCategoryList,setAllCategoryList]=useState([]);
-    
-    const allCategory=()=>{
-        axios.get(`${baseUrl}/category`)
+  
+  const baseUrl=import.meta.env.VITE_BASE_URL;
+  
+  const {id} =useParams();
+  
+  const[AllCategoryList,setAllCategoryList]=useState([]);
+  
+  const allCategory=()=>{
+    axios.get(`${baseUrl}/category`)
         .then((res)=>{
-            setAllCategoryList(res.data);
+          setAllCategoryList(res.data);
         })
-    }
-
+      }
+      
     useEffect(()=>{
-        allCategory();
+      allCategory();
     },[])
-
-
+    
+    
     const [messageApi, contextHolder] = message.useMessage();
+    
+    const [uProduct,setUProduct]=useState({})
 
 
     const productById=()=>{
-        axios.get(`${baseUrl}/api/product/${id}`)
-        .then((res)=>{ 
-            updateProductFrom.setFieldsValue(res.data);  
-            updateProductFrom.setFieldsValue({category:res.data.category.id});  
+         axios.get(`${baseUrl}/api/product/${id}`)
+        .then((res)=>{
+          setUProduct(res.data)  
+          updateProductFrom.setFieldsValue(res.data);  
+          updateProductFrom.setFieldsValue({category:res.data.category.id});  
+          setUProduct(res.data)    
         })
         .catch((err)=>{
             console.log(err);  
@@ -101,12 +103,7 @@ export const UpdateProduct = () => {
         },
       },
     };
-
-     const [productImageUrl,setProductImageUrl]=useState('')
-        
-        const handelProductImg=(e)=>{ 
-          setProductImageUrl(e.target.value)
-        }
+            
 
   return (
     <div className='flex flex-col items-center relative bg-white'>
@@ -128,7 +125,7 @@ export const UpdateProduct = () => {
       scrollToFirstError
     >
         
-      <Popover placement="left" content={<img className='h-23 w-23' src={productImageUrl} alt="Product Image" />}  title="Product Image">
+      <Popover placement="left" content={<img className='h-23 w-23' src={uProduct.productImg} alt="Product Image" />}  title="Product Image">
         <Form.Item
         className='w-full flex justify-center'
         name="productImg"
@@ -147,7 +144,7 @@ export const UpdateProduct = () => {
         ]}
         validateFirst
       >
-       <Input placeholder='Enter Your Product Image Url'  className='!text-md !w-[300px] sm:!w-[500px] lg:!w-[700px] h-9' onChange={handelProductImg}/>
+       <Input placeholder='Enter Your Product Image Url'  className='!text-md !w-[300px] sm:!w-[500px] lg:!w-[700px] h-9'/>
       </Form.Item >
       </Popover>
 

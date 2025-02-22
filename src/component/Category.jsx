@@ -217,7 +217,7 @@ const columns = [
 
 
   return (
-    <div className='px-2 sm:px-10 h-screen relative'>
+    <div className='px-2 sm:px-10 relative'>
 
         {contextHolder}
         

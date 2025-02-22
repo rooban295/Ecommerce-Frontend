@@ -83,7 +83,7 @@ export const FilterProduct = () => {
   pagination={{ clickable: true }}
   navigation={true}
   modules={[Autoplay, Pagination, Navigation]}
-  className="mySwiper mt-5 rounded-md shadow-2xl h-[260px] md:h-[450px]"
+  className="mySwiper mt-5 rounded-md shadow-2xl h-[260px] md:h-[550px]"
 >
   {category.map((item) =>
     item.bannerImageUrl !== "" ? (

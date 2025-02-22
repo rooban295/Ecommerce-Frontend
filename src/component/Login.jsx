@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setJwtToken } from '../slices/JwtSlices';
 import { setAdmin } from '../slices/Admin';
 import { ToastContainer, Zoom } from 'react-toastify';
-import {Button,Form,Input,Select,notification,message} from 'antd';
+import {Button,Form,Input,Select,notification,message,Popover,QRCode} from 'antd';
 
 
 export const Login = () => {
@@ -139,7 +139,12 @@ const tailFormItemLayout = {
         {contextHolder2}
         {contextHolder}
      
-        <nav className='h-12 shadow flex justify-end items-center'>
+        <nav className='h-12 shadow flex justify-between items-center px-5'>
+        <Popover content={<QRCode type="canvas" value="ecommerce-rho-khaki.vercel.app" />} title="E-commerce">
+        <div className='h-25 w-25'>
+        <img className='object-fill' src="https://res.cloudinary.com/depfu1w0f/image/upload/v1740230755/Logo_jhvjoj.png" alt="" />
+        </div>
+        </Popover>
         <a className='px-10 text-sm text-slate-500' onClick={openNotification}>Need Help ?</a>
         </nav>
 

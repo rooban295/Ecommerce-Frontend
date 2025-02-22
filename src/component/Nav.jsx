@@ -346,7 +346,7 @@ const addProductContent =
 
             <div ref={menu} className='absolute right-[0px] bg-white h-screen w-[250px] mt-5 shadow-xl rounded hidden'>
 
-            <button className='absolute top-10 left-5' onClick={()=>{setMenuAcc(!menuAcc)}} onFocus={()=>{setMenuAcc(false)}} onBlur={()=>{setTimeout(()=>{setMenuAcc(false)},200)}}> <VscAccount className='h-6 w-6 cursor-pointer text-slate-500 hover:text-slate-800'/></button>
+            <button className='absolute top-10 left-5' onClick={()=>{setMenuAcc(!menuAcc)}} onFocus={()=>{setMenuAcc(false)}} onBlur={()=>{setTimeout(()=>{setMenuAcc(false)},200)}}> <VscAccount className='h-6 w-6 cursor-pointer hover:text-sky-500'/></button>
             {   
             menuAcc ?
             <div className='bg-white flex flex-col gap-4 p-2 rounded-md shadow-2xl w-[200px] absolute top-18 left-3'>
@@ -355,7 +355,7 @@ const addProductContent =
                 <p className='tracking-normal'>{userinfo.fullName}</p>
                 <p>{userinfo.email}</p>
                 <p>{userinfo.role}</p>
-                <p onClick={handleLogout} className='rounded bg-slate-600 hover:bg-slate-800 p-1 text-white w-fit'>Logout <span className='ml-2'><IoLogOutOutline className='inline h-5 w-5'/></span></p>         
+                <p onClick={handleLogout} className='hover:text-sky-500'>Logout <IoIosLogOut className='inline h-5 w-5  ml-3'/></p>
             </div>:<></>
            }
    
@@ -364,18 +364,18 @@ const addProductContent =
 
             <div className='flex flex-col gap-3 mt-20 ml-5'>
             {/* <FilterProduct /> */}
-            <Link to='product' className={`hover:text-lg text-slate-600 hover:text-slate-800 mt-5 ${admin?'':'hidden'}`}>Add product</Link>
+            <Link to='product' className={`hover:text-lg hover:text-sky-500 mt-5 ${admin?'':'hidden'}`}>Add product</Link>
             <div className={`${admin ? '':'hidden'} `}>
-            <Link to='/category' className={`text-slate-600 hover:text-slate-800`}>Add Category</Link>
+            <Link to='/category' className={`hover:text-sky-500`}>Add Category</Link>
             </div>
-            <Link to='/vieworder' className='text-slate-600 hover:text-slate-600 '>Orders</Link>
+            <p className='hover:text-sky-500' onClick={()=>viewOrder('/vieworder')}>Orders <BsBoxSeam className='inline h-4 w-4 ml-3'/></p>
             </div>
 
            <div className={`absolute top-9 left-9  ${accNotification ? 'block':'hidden'}`}> {/**  Account Notification*/}
-            <span className="relative flex size-3">
+            {/* <span className="relative flex size-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-900 opacity-75"></span>
                 <span className="relative inline-flex size-3 rounded-full bg-sky-700"></span>
-                </span>
+                </span> */}
             </div>
 
 

@@ -107,7 +107,7 @@ export const BannerProduct = () => {
         
         {
         category.bannerImageUrl?   
-       <div className='rounded-2xl  shadow-2xl h-[250px] md:h-[450px] pt-10'>
+       <div className='rounded-2xl  shadow-2xl h-[250px] md:h-[450px] lg:h-[550px] pt-10'>
         <img src={category.bannerImageUrl} alt='banner Img' className='w-full h-full object-fill rounded-xl'/> 
        </div>
        :<></>
