@@ -149,7 +149,7 @@ const tailFormItemLayout = {
 
         loginfrom ?
    
-        <Form  {...formItemLayout} form={forms} name="register" onFinish={onLogin}  className='outline-none flex flex-col rounded-lg absolute top-[25%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'
+        <Form  {...formItemLayout} form={forms} name="register" onFinish={onLogin}  className='outline-none flex flex-col rounded-lg absolute top-[25%] left-[8%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'
         initialValues={{
           residence: ['zhejiang', 'hangzhou', 'xihu'],
           prefix: '86',
@@ -194,7 +194,7 @@ const tailFormItemLayout = {
         </Form.Item>
   
         <Form.Item className='w-full '> 
-          <button onClick={handelSignInButton} className=' text-slate-500 pl-14 cursor-pointer hover:text-slate-700'>Register account</button>
+          <button onClick={handelSignInButton} className=' text-slate-500 pl-5 lg:pl-14 cursor-pointer hover:text-slate-700'>Register account</button>
         </Form.Item>
   
         <Form.Item {...tailFormItemLayout}>
@@ -206,11 +206,11 @@ const tailFormItemLayout = {
       </Form>
 
         :
-    <div className='rounded-xl absolute top-[20%] left-[10%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%] w-[320px] md:w-[400px]  shadow-2xl'>
+    <div className='rounded-xl absolute top-[20%] left-[8%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%] w-[320px] md:w-[400px]  shadow-2xl'>
 
     <p className='text-slate-900 pt-10 text-3xl animate-bounce text-center mb-5'>Create Account</p>
   
-      <Form className='flex flex-col items-center' {...formItemLayout} form={form} name="register" onFinish={onFinish}
+    <Form className='flex flex-col items-center' {...formItemLayout} form={form} name="register" onFinish={onFinish}
       initialValues={{
         residence: ['zhejiang', 'hangzhou', 'xihu'],
         prefix: '86',
@@ -311,7 +311,7 @@ const tailFormItemLayout = {
       </Form.Item>
 
       <Form.Item className='w-full '> 
-        <button onClick={handelLoginInButton}  className=' text-slate-500 pl-14 cursor-pointer hover:text-slate-700'>Login account</button>
+        <button onClick={handelLoginInButton}  className=' text-slate-500 pl-5 lg:pl-14 cursor-pointer hover:text-slate-700'>Login account</button>
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
