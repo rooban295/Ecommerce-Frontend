@@ -139,13 +139,13 @@ const tailFormItemLayout = {
         {contextHolder2}
         {contextHolder}
      
-        <nav className='h-12 shadow flex justify-between items-center xl:px-5'>
+        <nav className='h-12 shadow flex justify-between items-center px-2 xl:px-5'>
         <Popover content={<QRCode type="canvas" value="ecommerce-rho-khaki.vercel.app" />} title="E-commerce">
         <div className='h-25 w-25'>
         <img className='object-fill' src="https://res.cloudinary.com/depfu1w0f/image/upload/v1740230755/Logo_jhvjoj.png" alt="" />
         </div>
         </Popover>
-        <a className='px-10 text-sm text-slate-500' onClick={openNotification}>Need Help ?</a>
+        <a className='text-sm text-slate-500' onClick={openNotification}>Need Help ?</a>
         </nav>
 
         <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} closeButton={false} hideProgressBar={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
