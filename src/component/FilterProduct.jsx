@@ -81,7 +81,7 @@ export const FilterProduct = () => {
   centeredSlides={true}
   autoplay={{ delay: 2000, disableOnInteraction: false }}
   pagination={{ clickable: true }}
-  navigation={true}
+  navigation={false}
   modules={[Autoplay, Pagination, Navigation]}
   className="mySwiper mt-5 rounded-md shadow-2xl h-[260px] md:h-[550px]"
 >
