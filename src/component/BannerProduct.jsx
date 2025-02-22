@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
+import { Space, Table, Button, Popover,message,Popconfirm ,Form,Input,Select } from 'antd';
+
 
 export const BannerProduct = () => {
   const baseUrl=import.meta.env.VITE_BASE_URL;
@@ -18,6 +20,9 @@ export const BannerProduct = () => {
     const [selectedCategory,setSelectedCategory]=useState(0);
 
     const[product,setProduct]=useState([])
+
+    const [messageApi, contextHolder] = message.useMessage();
+    
 
 
     
@@ -68,8 +73,7 @@ export const BannerProduct = () => {
             }
         })
         .then((res)=>{
-            toast.success("Item Added to Cart")
-            // cartNav('/cart')   
+            messageApi.open({ type: 'success', content: 'Item Added to Cart',className:'mt-11 text-green-500'});
         })
         .catch((err)=>{
             console.log(err);
@@ -94,7 +98,10 @@ export const BannerProduct = () => {
     }
     },[categoryId])
   return (
-    <div className={`px-4 md:px-20 bg-slate-200 ${product.length ?'':'h-screen'}`}>
+    <div className={`px-4 md:px-20 ${product.length ?'':'h-screen'}`}>
+
+
+        {contextHolder}
 
         <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>
         
@@ -112,7 +119,7 @@ export const BannerProduct = () => {
             {
                 product.filter((item)=>categoryId > 0 ? item.category.id===categoryId : item).map((item,index)=>(
     
-                    <div className='mx-4 rounded-2xl shadow-xl hover:shadow-slate-400 bg-slate-300 mb-5 cursor-pointer' key={item.id}>
+                    <div className='mx-4 rounded-2xl shadow-2xl hover:shadow-slate-400  mb-5 cursor-pointer' key={item.id}>
                     <div className=' mt-0 px-4 flex flex-col gap-5 items-center '>  
                         
                         <img  onClick={()=>{handelProductClick(item.id)}} src={item.productImg} alt={item.name} className='mt-5 h-[180px] sm:h-[200px]'/>
@@ -121,7 +128,8 @@ export const BannerProduct = () => {
                         <h1 className='text-slate-700'>{item.productName}</h1>
                         <p className='text-justify'>{item.description}</p>
                         <h1 className='font-bold'><span>₹</span>{item.productPrice}</h1>
-                        <button  className=' bg-slate-400 rounded-lg p-1 px-3 my-5 hover:bg-slate-600' onClick={()=>{handelCartButton(item.id)}}>Add to cart</button>
+                        {/* <button  className=' bg-slate-400 rounded-lg p-1 px-3 my-5 hover:bg-slate-?600' onClick={()=>{handelCartButton(item.id)}}>Add to cart</button> */}
+                        <Button type="primary" className='my-5' onClick={()=>{handelCartButton(item.id)}}>Add to Cart</Button>
                         </div>
                     </div>  
                     </div>

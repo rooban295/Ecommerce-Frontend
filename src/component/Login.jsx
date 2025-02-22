@@ -17,7 +17,7 @@ export const Login = () => {
     const adminDispatch=useDispatch();
 
     const [jwtToken ,setJwtTokenObject]=useState({})
-    const [noticationMsg,setNoticationMsg]=useState([])
+    
     const [loginfrom,setloginfrom]=useState(false)
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -33,24 +33,6 @@ export const Login = () => {
         setloginfrom(true)
     }
 
-
-    const[accountDetails,setAccountDetails]=useState({
-        fullName:'',
-        email:'',
-        password:'',
-        role:''
-    })
-
-    const[loginDetails,setLoginDetails]=useState({
-        userName:'',
-        password:''
-    })
-
-
-    //working
-
-
-    // ---------------------------------
 
 const { Option } = Select;
 
@@ -99,13 +81,13 @@ const tailFormItemLayout = {
 
 
     //login 
-    const loginApi=(logDetails)=>{        
+    const loginApi=(logDetails)=>{
+        // messageApi.open({type:'loading',content:'Sever Loading...', className:'text-blue-500 mt-9'})        
         axios.post(`${baseUrl}/api/auth/signin`,logDetails)
         .then((res)=>{
-
-            messageApi.open({type:'loading',content:'Verifying...', className:'text-blue-500'})
+            messageApi.open({type:'loading',content:'Verifying...', className:'text-blue-500 mt-9'})
             setTimeout(()=>{
-            messageApi.open({type:'success',content:"Login successfully", className:'text-green-500'})
+            messageApi.open({type:'success',content:"Login successfully", className:'text-green-500 mt-9'})
             setTimeout(()=>{
             setJwtTokenObject(res.data)
             if(res.data.role === 'ROLE_ADMIN'){
@@ -118,8 +100,8 @@ const tailFormItemLayout = {
 
            },3000)  
         })
-        .catch((err)=>{
-           messageApi.open({type:'error',content:'Login Failed', className:'text-bg-red'})
+        .catch(()=>{
+           messageApi.open({type:'error',content:'Login Failed', className:'text-bg-red mt-9 text-red-500'})
         })
     }
 
@@ -128,13 +110,13 @@ const tailFormItemLayout = {
     const createAccountApi=(accDetails)=>{
         axios.post(`${baseUrl}/api/auth/signup`,accDetails)
         .then(()=>{
-            messageApi.open({type:'success',content:'Register successfully'})
+            messageApi.open({type:'success',content:'Register successfully', className:'mt-9 text-green-500'})
             setTimeout(()=>{
                 setloginfrom(!loginfrom)
             },3000)
         })
         .catch(()=>{
-            messageApi.open({type:'warning',content:'This Email is already taken'})
+            messageApi.open({type:'warning',content:'This Email is already taken', className:'mt-9 text-yellow-500'})
         })
     }
 

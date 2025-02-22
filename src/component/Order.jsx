@@ -7,7 +7,9 @@ import { SlCheck } from "react-icons/sl";
 import { CiCreditCard1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline } from "react-icons/io5";
-import { ToastContainer, Zoom, toast } from 'react-toastify';
+import { message} from 'antd';
+
+
 
 
 export const Order = () => {
@@ -32,7 +34,11 @@ const[cartItem,setCartItem]=useState({ //for cart update
 
   const[cart , setCart]=useState({});
 
-  const viewOrder=useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const view=useNavigate();
+
+
 
 
         useEffect(()=>{
@@ -127,16 +133,18 @@ const updatingCart=(c)=>{
     if(quan >= 1){
       
     const cartItem={id:cartItemid,quantity:quan + 1}
-    updatingCart(cartItem) 
+    updatingCart(cartItem)
+    messageApi.open({type:'success',content:'Quantity Increased', className:'text-green-500 mt-13'})
     }
   
   }
   
   const handelReducedQuantity=(cartItemid,quan)=>{
     if(quan >= 2){
-  
+
     const cartItem={id:cartItemid,quantity: quan - 1}
     updatingCart(cartItem);
+    messageApi.open({type:'success',content:'Quantity Decreased', className:'text-green-500 mt-13'})
     }
   }
 
@@ -150,7 +158,7 @@ const removeOrderItem=(id)=>{
       }
     })
     .then((res)=>{
-      toast.success("order Item removed")
+      messageApi.open({type:'success',content:'order Item removed', className:'text-green-500 mt-13'})
       deleteMsgPopup(res.data);
       fetchAllItem();
       cardPriceDetais();
@@ -207,11 +215,9 @@ const removeOrderItem=(id)=>{
       }
     })
     .then((res)=>{
-
-      toast.success("Order Placed Succesfully")
-
+      messageApi.open({type:'success',content:'Order Placed Succesfully', className:'text-green-500 mt-13'})
       setTimeout(()=>{
-        viewOrder('/vieworder')
+      view('/orderresult')
       },2000)
     })
     .catch((err)=>{
@@ -264,7 +270,7 @@ const removeOrderItem=(id)=>{
       orderApi()
     }
     else{
-      toast.warning("Order Not Placed")
+      messageApi.open({type:'warning',content:'Order Not Placed', duration: 1, className:'text-yellow-500 mt-13'})
     }
 
   }
@@ -274,16 +280,16 @@ const removeOrderItem=(id)=>{
   return (
     <div className=''>
 
-      <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
-      
-        <h1 className=' mt-5 sm:mt-8 text-center text-xl'>Order Summary</h1>
+      {contextHolder}
+     
+      <h1 className=' mt-5 sm:mt-8 text-center text-xl'>Order Summary</h1>
     
-        <section className='max-sm:flex-col flex p-1 gap-10 mt-10 px-3 sm:px-10'>
+       <section className='max-sm:flex-col flex p-1 gap-10 mt-10 px-3 sm:px-10'>
 
         <div className='w-full'>
 
         {/* account details */}
-        <div className='bg-slate-300 rounded pl relative p-1 px-5 shadow-2xl'>
+        <div className='rounded bg-white relative p-1 px-5 shadow-2xl'>
         <p className='text-slate-500 inline'>Login</p> <FcApproval className='inline right-5 top-4'/>
         <div className='flex gap-10 mt-1'>
         <MdOutlineAccountCircle className='h-10 w-10 fill-slate-700 mt-1' />
@@ -297,7 +303,7 @@ const removeOrderItem=(id)=>{
 
 
             {/*Address Details  */}
-        <div className='mt-8  bg-slate-200 px-5 rounded shadow-2xl'>
+        <div className='mt-8  bg-slate-100 px-5 rounded shadow-2xl'>
 
         <p className='text-start inline-block text-slate-800 pt-2'>Delivery Address</p> <IoLocationOutline className={`${address ?"inline":"hidden"} text-slate-800`}/>
 
@@ -315,8 +321,8 @@ const removeOrderItem=(id)=>{
 
         {/* Cart Item */}
 
-        <div className='flex flex-col gap-5 mt-4 shadow-2xl'>
-          <div className='absolute top-[-1000px] left-[45%] p-1 bg-slate-300 rounded-lg duration-75' ref={deleteMess} >
+        <div className='flex flex-col gap-5 mt-5 shadow-2xl'>
+          <div className='absolute top-[-1000px] left-[45%] p-1  rounded-lg duration-75' ref={deleteMess} >
                   <p className=''>{deleteMsg}<SlCheck className='inline text-green-400 h-5 w-5'/></p>
             </div>
 
@@ -324,7 +330,7 @@ const removeOrderItem=(id)=>{
         {
           cartitem.map((item,index)=>(
 
-            <div className='flex  gap-4 rounded-md bg-slate-300 shadow-md hover:shadow-2xl' key={index}>
+            <div className='flex  gap-4 rounded-md shadow-md hover:shadow-2xl' key={index}>
 
               <div className='flex justify-center items-center' onClick={()=>{handelImg(item.product.id)}}>
               <img src={item.product ? `${item.product.productImg}` :'https://images.app.goo.gl/TDXnWh18KyRJhhzj9'} alt="" className=' w-24 p-1 cursor-pointer' />
@@ -341,17 +347,17 @@ const removeOrderItem=(id)=>{
 
                 <p className=''>
 
-                <button onClick={()=>{handelAddQuantity(item.id ,item.quantity)}} className='bg-slate-400 rounded py-[1px] px-[4px] font-bold hover:bg-slate-600'>+</button> 
+                <button onClick={()=>{handelAddQuantity(item.id ,item.quantity)}} className='bg-blue-500 text-white rounded py-[1px] px-[4px] font-bold hover:bg-blue-600'>+</button> 
                 
-                {item.quantity}  
+                <span className='mx-1'>{item.quantity}  </span>
                 
-                <button onClick={()=>{handelReducedQuantity(item.id,item.quantity)}} className='bg-slate-400 rounded py-[1px] px-[6px] font-bold hover:bg-slate-600'>-</button>
+                <button onClick={()=>{handelReducedQuantity(item.id,item.quantity)}} className='bg-blue-500 text-white rounded py-[1px] px-[6px] font-bold hover:bg-blue-600'>-</button>
 
                 </p>
 
                 </div>
 
-                <button onClick={()=>handelRemoveCartItem(item.id)} className='w-fit rounded h-fit bg-slate-400 hover:bg-slate-600 px-1 text-slate-800'>Remove</button>
+                <button onClick={()=>handelRemoveCartItem(item.id)} className='w-fit rounded h-fit bg-blue-500 text-white hover:bg-blue-600 px-1'>Remove</button>
               </div>
             </div>
           ))
@@ -361,7 +367,7 @@ const removeOrderItem=(id)=>{
 
       {/* payment method */}
 
-      <section className='bg-slate-300 mt-10 rounded-md p-2'>
+      <section className='bg-slate-100 mt-10 rounded-md p-2'>
 
       <form onSubmit={handelPaymentMode}>
         <h1 className='text-slate-500 pb-4 inline-block'>Payment details</h1> <FcApproval className='inline right-5 top-4'/>
@@ -399,10 +405,10 @@ const removeOrderItem=(id)=>{
 
         <div className='mt-5 w-80 max-sm:w-full '>
         {
-        <div className='p-1 rounded-md bg-slate-200 shadow-xl py-7 px-5'>
+        <div className='p-1 rounded-md bg-slate-100 shadow-xl py-7 px-5'>
         <h1 className='text-center font-bold'>Price details</h1>
         <p className='mt-5'><span className='font-bold'>Total Amount : $</span> {cart.cartTotal}</p>
-        <button onClick={()=>handelPlaceOrder()} className='p-1 mt-2 rounded-sm bg-slate-500 hover:bg-slate-900 cursor-pointer text-white '>Place Order</button>
+        <button onClick={()=>handelPlaceOrder()} className='p-1 mt-2 rounded-sm bg-blue-500 hover:bg-blue-900 cursor-pointer text-white '>Place Order</button>
         </div>
         }
         </div>

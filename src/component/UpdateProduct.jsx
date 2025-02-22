@@ -2,8 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
-import {Button,Form,Input,Select,InputNumber, Popover  } from 'antd';
-
+import {Button,Form,Input,Select,InputNumber, Popover ,message } from 'antd';
 
 export const UpdateProduct = () => {
 
@@ -25,6 +24,9 @@ export const UpdateProduct = () => {
     useEffect(()=>{
         allCategory();
     },[])
+
+
+    const [messageApi, contextHolder] = message.useMessage();
 
 
     const productById=()=>{
@@ -50,9 +52,9 @@ export const UpdateProduct = () => {
 
         axios.put(`${baseUrl}/api/product/update/${id}`,product)
         .then(()=>{
-            toast.success("Product Updated Successfully")
+            messageApi.open({type: 'success',className:'mt-13 text-green-500', content: 'Product Updated Successfully',} );
             setTimeout(()=>{
-                home('/')
+                // home('/')
             },2000)    
         })
         .catch((err)=>{
@@ -109,8 +111,8 @@ export const UpdateProduct = () => {
   return (
     <div className='flex flex-col items-center relative bg-white'>
 
-        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
-        
+        {contextHolder}
+
         <h1 className='pt-8 mb-8 text-md lg:text-xl font-bold'>Update Product</h1>
 
     <Form className='flex flex-col items-center !w-[90%]' {...formItemLayout} form={updateProductFrom} name="register" onFinish={onsubmitUpdateForm}

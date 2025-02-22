@@ -16,6 +16,7 @@ import { notification, Popover, Popconfirm , message } from 'antd';
 import { AddProduct } from './AddProduct';
 import { IoIosLogOut } from "react-icons/io";
 import { BsBoxSeam } from "react-icons/bs";
+import { Flex, Transfer , Empty} from 'antd';
 
 
 
@@ -231,11 +232,11 @@ const addProductContent =
                 <div>
                   
                 <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-10">
-                <Link to={`/`} className='hidden md:block text-md hover:text-slate-800 mt-1'>Home</Link>
+                <Link to={`/`} className='hidden md:block text-md hover:text-sky-500 mt-1'>Home</Link>
                 </div>
 
                 <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-6">
-                <Link to={`/`} className=''><GrHomeRounded className='hidden max-md:block h-5 w-6 mt-2 text-slate-700 hover:text-slate-900 '/></Link>
+                <Link to={`/`} className=''><GrHomeRounded className='hidden max-md:block h-5 w-6 mt-2  hover:text-sky-500 '/></Link>
                 </div>
                 </div>
 
@@ -243,23 +244,24 @@ const addProductContent =
                 <div>
                 <div className='flex relative'>
                 <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-10">
-                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-blue-200 bg-slate-100 border-none hover:ring-2 pl-5 rounded-md p-1 w-[230px] sm:w-[300px] md:w-[350px] lg:w-[650px] xl:w-[1000px]'  placeholder='Search Product'/>
+                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-blue-200 bg-slate-100 border-none hover:ring-2 pl-5 rounded-md p-1 w-[250px] sm:w-[300px] md:w-[350px] lg:w-[650px] xl:w-[1000px]'  placeholder='Search Product'/>
                 </div>
-                <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-2 top-1 text-slate-400 hover:text-slate-600 ' onClick={handelSearchList}/>
+                <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-2 top-1 hover:text-sky-500 ' onClick={handelSearchList}/>
                 </div>
                 {
                     dropDownsearch && (
-                        <ul className='bg-white rounded-md absolute left-7 md:left-20 lg:left-25 xl:left-35 top-[70px] w-[230px] sm:w-[300px] md:w-[350px] lg:w-[650px] xl:w-[1000px] p-2 duration-75 shadow-2xl max-h-[400px] overflow-y-hidden'>
+                        <ul className='bg-white rounded-md absolute left-10 md:left-20 lg:left-25 xl:left-35 top-[70px] w-[270px] sm:w-[300px] md:w-[350px] lg:w-[650px] xl:w-[1000px] p-2 duration-75 shadow-2xl max-h-[400px] overflow-y-hidden'>
                             {
                                 searchResult.length > 0 ?(
                                 searchResult.map((item,index)=>(
                                     <li onClick={()=>(viewNav(`/view/${item.id}`))}  key={index} className='flex justify-between my-5 hover:bg-sky-100 px-2 rounded-sm cursor-pointer'>
-                                        <p >{item.productName}</p>
+                                        <p className='text-sm sm:text-md mr-1'>{item.productName}</p>
                                         <img src={item.productImg} alt={item.name} className='h-[50px] w-[50px'/>
                                     </li>
                                 ))
                             ):(
-                            <li><p>Product not found :)</p></li>)
+                            <li className='flex justify-center'><img src="https://res.cloudinary.com/depfu1w0f/image/upload/v1740211445/no_data_vfsclv.png" alt="Product Not Found" /></li>
+                          )
                             }
                         </ul>
                     )
@@ -276,7 +278,7 @@ const addProductContent =
             {/* <FilterProduct />      * filtering the product            */}
             <div className={`${admin ? '':'hidden'} `}>
             <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-9">
-            <Link to='/category' className={`hover:text-slate-800`}>Category</Link>
+            <Link to='/category' className={`hover:text-sky-500`}>Category</Link>
             </div>
             </div>
 
@@ -294,7 +296,7 @@ const addProductContent =
             open={clicked2}
             onOpenChange={handleClickChange2}>
             <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-9">
-            <p className='text-md'>Product</p>
+            <p className='text-md hover:text-sky-500'>Product</p>
             </div>
             </Popover>
             </Popover>
@@ -317,7 +319,7 @@ const addProductContent =
             open={clicked}
             onOpenChange={handleClickChange}>
             <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-9">
-            <VscAccount className='max-md:hidden h-6 w-6 cursor-pointer text-slate-500 hover:text-slate-800'/>
+            <VscAccount className='max-md:hidden h-6 w-6 cursor-pointer hover:text-sky-500'/>
             </div>
             </Popover>
             </Popover>
@@ -325,11 +327,11 @@ const addProductContent =
   
             <div className='relative'>  {/** Shoping cart */}
             <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-9">
-            <Link to='cart'><LuShoppingCart className='h-6 w-6 text-slate-600 hover:text-slate-800'/></Link>
+            <Link to='cart'><LuShoppingCart className='h-6 w-6 hover:text-sky-500'/></Link>
             </div>
             {
             cartitem.length > 0 ?
-            <div className='absolute top-[-11px] left-[7px] py-[3px] px-[6px] text-[8px] rounded-full bg-red-500 text-white font-bold'>{cartitem.length}</div>
+            <div className='absolute top-[-11px] left-[7px] py-[3px] px-[6px] text-[8px] rounded-full bg-sky-500 text-white font-bold'>{cartitem.length}</div>
             :<></>
             }
             </div>

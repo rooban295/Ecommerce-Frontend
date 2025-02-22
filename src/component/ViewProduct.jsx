@@ -1,12 +1,9 @@
 import axios from 'axios'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { UpdateProduct } from './UpdateProduct'
-import { ToastContainer, Zoom, toast } from 'react-toastify';
-
-import { Button, message, Popconfirm } from 'antd'
+import { message,Popconfirm,Button} from 'antd';
 
 
 
@@ -18,11 +15,7 @@ export const ViewProduct = () => {
 
     const admin=useSelector((state)=>state.admin.admin);
 
-    const cartNav=useNavigate()
-
     const updateProduct=useNavigate()
-
-    const cart=useNavigate();
 
     const home=useNavigate();
 
@@ -30,9 +23,8 @@ export const ViewProduct = () => {
 
     const[product,setProduct]=useState({});
 
-    const deletePopup=useRef();
+    const [messageApi, contextHolder] = message.useMessage();
 
-    const updatePopup = useRef();
     
 
     const productById=(id)=>{
@@ -59,7 +51,7 @@ export const ViewProduct = () => {
     const deleteProductRequest=async(productId)=>{         
         await axios.delete(`${baseUrl}/api/product/${productId}`)
         .then((res)=>{
-            message.success('Product Deleted Successfully');
+            messageApi.open({ type: 'success', content: "Product Deleted Successfully", className:'mt-11 text-green-500'});
             setTimeout(()=>{
             home('/')
             },2000)
@@ -71,9 +63,6 @@ export const ViewProduct = () => {
 
     const [pop,setPop]=useState(false);
 
-    const handelDeleteButton =()=>{
-        setPop(!pop);
-    }
 
     const[cartitem ,setcartItem]=useState({
         productId:null,
@@ -98,13 +87,10 @@ export const ViewProduct = () => {
             }
         })
         .then((res)=>{
-            // toast.success("Item Added to cart")
-            message.success('Product Added to Cart');
-            // cartNav('/cart') 
+        messageApi.open({ type: 'success', content: "Item Added to cart", className:'mt-11 text-green-500'});
         })
         .catch((err)=>{
-            console.log(err);
-            
+            console.log(err);    
         })
     }
     }
@@ -113,15 +99,14 @@ export const ViewProduct = () => {
         deleteProductRequest(proId)
       };
       const cancel = (e) => {
-        message.error('Click on No');
+        messageApi.open({ type: 'error', content: "Click on No", className:'mt-11 text-red-500'});
       };
     
 
   return (
     <div  className={`relative sm:h-screen`}>
 
-        <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
-        
+        {contextHolder}
        
         <h1 className='text-center text-2xl pt-10 font-bold'>View Product</h1>
             {
@@ -149,10 +134,6 @@ export const ViewProduct = () => {
                </div>
         </div>
             }
-            {/* <div ref={updatePopup} className='absolute bg-slate-300 top-[-1000px] left-[10%] rounded-lg w-[80%]  duration-300'>
-            <UpdateProduct className='mx-0 px-0 mt-0 p-0 py-0'/>
-            <RiCloseLargeFill className='absolute top-3 right-4 h-5 w-5 hover:h-7 hover:w-7 animate-bounce' onClick={()=>updatePopup.current.style.top='-1000px'}/>          
-            </div> */}
     </div>
   )
 }

@@ -16,6 +16,7 @@ import { Category } from './component/Category'
 import { SearchProduct } from './component/SearchProduct'
 import { BannerProduct } from './component/BannerProduct'
 import axios from 'axios'
+import { OrderResult } from './component/OrderResult'
 
 
 function App() {
@@ -101,6 +102,7 @@ const cartItems=()=>{
       <Route path='/category' element={<Category/>}></Route>
       <Route path='/search' element={<SearchProduct/>}></Route>
       <Route path='/bannerproduct' element={<BannerProduct/>}></Route>
+      <Route path='/orderresult' element={<OrderResult/>}></Route>
     </Routes>
     {/* <Footer/> */}
     </BrowserRouter>)

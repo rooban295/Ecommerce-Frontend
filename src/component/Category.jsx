@@ -2,8 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { RiCloseLargeFill } from "react-icons/ri";
-import { ToastContainer, Zoom, toast } from 'react-toastify';
-import { Space, Table, Tag, Button, Popover,message,Popconfirm ,Form,Input,Select,InputNumber } from 'antd';
+import { ToastContainer, Zoom } from 'react-toastify';
+import { Space, Table, Button, Popover,message,Popconfirm ,Form,Input,Select } from 'antd';
 import { GrView } from "react-icons/gr";
 
 
@@ -12,12 +12,6 @@ export const Category = () => {
 const baseUrl=import.meta.env.VITE_BASE_URL;
 
 const [allCategory,setAllCategory]=useState([]);
-
-const [addCat,setAddCategory]=useState({
-    categoryName:'',
-    categoryImageUrl:'',
-    bannerImageUrl:''
-})
 
 const [messageApi, contextHolder] = message.useMessage();
 
@@ -42,11 +36,11 @@ const fetchCategories=()=>{
 
 const addCategory= async (category)=>{
    await axios.post(`${baseUrl}/category/add`,category)
-   .then((res)=>{
+   .then(()=>{
 
     updatePopup.current.style.top='-1000px'
 
-    messageApi.open({ type: 'success', content: 'Category Added Successfully',});
+    messageApi.open({ type: 'success', content: 'Category Added Successfully', className:'mt-11 text-green-500'});
 
     fetchCategories(); 
 
@@ -68,8 +62,11 @@ const [updateCategory,setUpdateCategory]=useState({
 const updateApi=(upData)=>{
     if(updateCategory.id){
     axios.put(`${baseUrl}/category/update/${updateCategory.id}`,upData)
-   .then((res)=>{
-    messageApi.open({ type: 'success', content: 'Category Updated Successfully',});
+   .then(()=>{
+    updatePopup.current.style.top='-1000px'
+
+    messageApi.open({ type: 'success', content: 'Category Updated Successfully',className:'mt-11 text-green-500'});
+
     fetchCategories()
    })
    .catch((err)=>{
@@ -97,8 +94,8 @@ const getCategoryApi= async (id)=>{
 
 const deleteApi= async (id)=>{
    await axios.delete(`${baseUrl}/category/${id}`)
-   .then((res)=> {
-    messageApi.open({ type: 'success', content: "Deleted Successfully",});
+   .then(()=> {
+    messageApi.open({ type: 'success', content: "Deleted Successfully", className:'mt-11 text-green-500'});
     fetchCategories()
     } )
    .catch((err)=>{
@@ -213,17 +210,10 @@ const columns = [
       },
     };
 
-     const [categoryImageUrl,setCategoryImageUrl]=useState('')
-
-     const [bannerImageUrl,setBannerImageUrl]=useState('')
-        
-        const handelCategoryImg=(e)=>{ 
-            setCategoryImageUrl(e.target.value)
-        }
-
-        const handelBannerImg=(e)=>{
-            setBannerImageUrl(e.target.value)
-        }
+    const handelCategotyImage=(e)=>{
+      const {name,value}=e.target
+      setUpdateCategory({...updateCategory,[name]:value})
+    }
 
 
   return (
@@ -235,9 +225,10 @@ const columns = [
 
         <h1 className='text-center pt-10 text-2xl uppercase'>Category</h1>
 
-        <div ref={updatePopup} onBlur={()=>updatePopup.current.style.top='-1000px'} className='absolute bg-white shadow-lg top-[-1000px] left-[10%] rounded-lg w-[80%]  duration-300 z-50'>
+        <div ref={updatePopup}  className='absolute bg-white shadow-lg top-[-1000px] left-[10%] rounded-lg w-[80%]  duration-300 z-50'>
 
-              <Form className='flex flex-col items-center !mt-10' {...formItemLayout} form={categoryFrom} name="register" onFinish={onsubmitCategoryForm}
+              {updateBtn?<p className='text-center mt-2'>Update Categroy</p>:<p className='text-center mt-2'>Add Category</p>}
+              <Form className='flex flex-col items-center lg:!ml-15 xl:!ml-55 !mt-10 duration-100' {...formItemLayout} form={categoryFrom} name="register" onFinish={onsubmitCategoryForm}
                    initialValues={{
                      residence: ['zhejiang', 'hangzhou', 'xihu'],
                      prefix: '86',
@@ -272,7 +263,7 @@ const columns = [
 
 
 
-                   <Popover placement="left" content={<img className='h-23 w-23' src={categoryImageUrl} alt="Product Image" />}  title="Product Image">
+                   <Popover placement="left" content={<img className='h-23 w-23' src={updateCategory.categoryImageUrl} alt="Product Image" />}  title="Product Image">
                    <Form.Item
                      className='w-full flex justify-center'
                      name="categoryImageUrl"
@@ -290,14 +281,14 @@ const columns = [
                         ]}
                         validateFirst
                         >
-                   <Input placeholder='Enter categoryImageUrl'  className='!text-md !w-[300px] sm:!w-[500px] lg:!w-[700px] h-9' onChange={handelCategoryImg} />
+                   <Input placeholder='Enter categoryImageUrl' name='categoryImageUrl'  className='!text-md !w-[300px] sm:!w-[500px] lg:!w-[700px] h-9' onChange={handelCategotyImage}/>
              
                    </Form.Item >
                    </Popover>
 
 
 
-                   <Popover placement="left" content={<img className='h-23 w-23' src={bannerImageUrl} alt="Product Image" />}  title="Product Image">
+                   <Popover placement="left" content={<img className='h-23 w-23' src={updateCategory.bannerImageUrl} alt="Product Image" />}  title="Banner Image">
                    <Form.Item
                      className='w-full flex justify-center'
                      name="bannerImageUrl"
@@ -316,7 +307,7 @@ const columns = [
                      ]}
                      validateFirst
                    >
-                   <Input placeholder='Enter bannerImageUrl'  className='!text-md !w-[300px] sm:!w-[500px] lg:!w-[700px] h-9' onChange={handelBannerImg}/>
+                   <Input placeholder='Enter bannerImageUrl' name='bannerImageUrl'  className='!text-md !w-[300px] sm:!w-[500px] lg:!w-[700px] h-9' onChange={handelCategotyImage}/>
              
                    </Form.Item >
                    </Popover>
@@ -325,9 +316,9 @@ const columns = [
                    <Form.Item {...tailFormItemLayout}>
                      {
                          updateBtn ?
-                         <Button className='mr-35' htmlType="submit" name='update' type="primary" onClick={()=>updatePopup.current.style.top='-1000px'}>update</Button>
+                         <Button className='mr-35' htmlType="submit" name='update' type="primary">update</Button>
                          :    
-                         <Button type='primary' htmlType="submit" name='add' className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>add</Button>
+                         <Button type='primary' htmlType="submit" name='add' className='bg-slate-400 hover:bg-slate-600 w-fit p-1 rounded-lg'>Add</Button>
                     }
                    </Form.Item>
              
@@ -335,15 +326,11 @@ const columns = [
             <RiCloseLargeFill className='absolute top-3 right-4 h-5 w-5 hover:h-7 hover:w-7 animate-bounce' onClick={()=>updatePopup.current.style.top='-1000px'}/>
         </div>
 
-
-
-
         <div className='p-2 flex justify-end mt-10'>
             <Button type="primary" className='my-5' onClick={()=>{handelUpdateBtn()}}>Add</Button>  
         </div>
 
-        <Table columns={columns} dataSource={allCategory} className='shadow-xl'/>
-        
+        <Table pagination={false} columns={columns} dataSource={allCategory} className='!shadow-xl'/>
         
     </div>
   )
