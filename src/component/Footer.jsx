@@ -9,6 +9,7 @@ export const Footer = () => {
         <div>
           <h2 className="text-lg font-semibold mb-2">E-Commerce</h2>
           <p className="text-sm">Your one-stop shop for all your needs. Quality products at the best prices.</p>
+          <p className="text-sm my-2">Designed by Thison Rooban J</p>
         </div>
 
         {/* Quick Links */}
