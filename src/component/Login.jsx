@@ -124,9 +124,9 @@ const tailFormItemLayout = {
 
     const openNotification = () => {
       api.open({
-        message: 'Hello, User',
-        description:
-          'To create an account, click on the  "Register Account" button and fill in the required details, such as your name, email  and password. Make sure to use a valid email, as you may need to verify it. Choose a strong password for security. Once you submit the form, click on "login" ',
+        message: 'Hi, User',
+        description: <><p>To create an account, click on the "Register Account" button and fill in the required details, such as your name, email, and password. Make sure to use a valid email, as you may need to verify it. Choose a strong password for security. Once you submit the form, click on "Login".</p> 
+         <span className='mt-2 block'> <span className='font-bold'>Note:</span> It may take some time to load the server, so please be patient while the process completes.</span></>,
         duration: 0,
       });
     };
