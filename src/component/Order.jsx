@@ -187,10 +187,10 @@ const removeOrderItem=(id)=>{
   const [address,setAddress] = useState({
     city:'',
     street:'',
-    pincode:0,
+    pincode:null,
     state:'',
     country:'',
-    mobile:0
+    mobile:null
   })
 
   const handelAddressEvent=(e)=>{
@@ -209,6 +209,7 @@ const removeOrderItem=(id)=>{
 
   
   const orderApi=()=>{
+   
     axios.post(`${baseUrl}/api/order/placeorder`,{address},{
       headers:{
         Authorization: `Bearer ${jwt.jwt}`
@@ -216,6 +217,14 @@ const removeOrderItem=(id)=>{
     })
     .then((res)=>{
       messageApi.open({type:'success',content:'Order Placed Succesfully', className:'text-green-500 mt-13'})
+      setAddress({
+       city:'',
+       street:'',
+       pincode:null,
+       state:'',
+       country:'',
+       mobile:null
+      })
       setTimeout(()=>{
       view('/orderresult')
       },2000)
@@ -259,14 +268,6 @@ const removeOrderItem=(id)=>{
        address.street.length > 0 &&
        address.pincode &&
        address.country.length > 0 && paymentMode !=''){
-      setAddress({
-    city:'',
-    street:'',
-    pincode:0,
-    state:'',
-    country:'',
-    mobile:0
-      })
       orderApi()
     }
     else{

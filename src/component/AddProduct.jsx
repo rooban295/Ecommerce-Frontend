@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
 
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
 
 import { ToastContainer, Zoom } from 'react-toastify';
 
@@ -9,11 +8,11 @@ import {Button,Form,Input,Select,message ,InputNumber, Popover  } from 'antd';
 
 export const AddProduct = ({allproduct}) => {
 
+
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const [messageApi, contextHolder] = message.useMessage();
      
-    const productNav = useNavigate();
 
     const[product,setProduct]=useState({
         productName:'',
@@ -42,15 +41,12 @@ export const AddProduct = ({allproduct}) => {
 
     
     //add Product
-    const AddProduct=(product)=>{
+    const AddProducts= async (product)=>{
         
-        axios.post(`${baseUrl}/api/product/add`,product)
+        await axios.post(`${baseUrl}/api/product/add`,product)
         .then(()=>{
-            messageApi.open({type:'success',content:"Product Added Successfully", className:'text-green-500 mt-13'})
-            // allproduct()
-            setTimeout(()=>{
-            
-            },2000)
+            messageApi.open({type:'success',content:"Product Added Successfully", className:'text-green-500 mt-13'});
+            allproduct()
         })
         .catch((err)=>{
             console.log(err);   
@@ -94,7 +90,7 @@ export const AddProduct = ({allproduct}) => {
     
       const onProduct = (pro) => {
         pro.category = {id : parseInt(pro.category) }
-        AddProduct(pro)
+        AddProducts(pro)
         Products.resetFields();
         setProductImageUrl('')        
     };

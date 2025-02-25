@@ -7,7 +7,7 @@ import { FilterProduct } from './FilterProduct'
 import { ToastContainer, Zoom } from 'react-toastify';
 import { Button , message} from 'antd';
 
-export const Product = ({product},{cartItems}) => {
+export const Product = ({product,cartItems,allproduct}) => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
@@ -16,10 +16,6 @@ export const Product = ({product},{cartItems}) => {
     const categoryId=Number(useSelector((state)=>state.categoryId.categoryId))
 
     const navigate=useNavigate();
-
-    const cartNav=useNavigate();
-
-    // const[product,setProduct]=useState([])
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -67,9 +63,9 @@ export const Product = ({product},{cartItems}) => {
                 Authorization:`Bearer ${jwt.jwt}`
             }
         })
-        .then((res)=>{
+        .then(()=>{
             messageApi.open({type: 'success',className:'mt-13 text-green-500', content: 'Product Added to Cart',} );
-            // cartItems   
+            cartItems()  
         })
         .catch((err)=>{
             console.log(err);  
@@ -110,7 +106,7 @@ export const Product = ({product},{cartItems}) => {
         
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-20'>
         {
-            product.map((item,index)=>(    
+            product.map((item)=>(    
 
                 <div className='mx-4 rounded-2xl shadow-2xl hover:shadow-slate-400 bg mb-5 cursor-pointer' key={item.id}>
                 <div className=' mt-0 px-4 flex flex-col gap-5 items-center '>  

@@ -1,4 +1,3 @@
-import { AddProduct } from './component/AddProduct'
 import { Cart } from './component/Cart'
 import { Footer } from './component/Footer'
 import { Nav } from './component/Nav'
@@ -17,6 +16,7 @@ import { SearchProduct } from './component/SearchProduct'
 import { BannerProduct } from './component/BannerProduct'
 import axios from 'axios'
 import { OrderResult } from './component/OrderResult'
+import { AddProduct } from './component/AddProduct'
 
 
 function App() {
@@ -41,16 +41,17 @@ useEffect(()=>{
 },[jwt])
 
 
+useEffect(() => {
+  if (login) {
+    allproduct();
+    cartItems();
+  }
+}, [login]);
 
 
- useEffect(()=>{
-  allproduct();
-  cartItems()
- },[product])
+ const allproduct = async () =>{
 
-
- const allproduct=()=>{
-    axios.get(`${baseUrl}/api/product`)
+    await axios.get(`${baseUrl}/api/product`)
     .then((res)=>{
         setProduct(res.data);
     })
@@ -59,12 +60,11 @@ useEffect(()=>{
     })
 }
 
-
 //cart
-const cartItems=()=>{  
+const cartItems = async ()=>{ 
   if(jwt.message ==='Login successfully'){
-
-    axios.get(`${baseUrl}/api/cart/getcartitem`,{
+    
+   await axios.get(`${baseUrl}/api/cart/getcartitem`,{
       headers:{
         Authorization: `Bearer ${jwt.jwt}`
       }
@@ -78,9 +78,6 @@ const cartItems=()=>{
 }
 }
 
-
-
-
   return (
     <>
     {   
@@ -91,10 +88,10 @@ const cartItems=()=>{
     <Nav jwtToken={jwt} cartitem={cartitem} allproduct={allproduct}/>
     <Routes>
       <Route path='/login' element={<Login/>}></Route>  
-      <Route path='/'  element={<Product product={product}/>}></Route>  
-      <Route path='/product' element={<AddProduct allproduct={allproduct} cartItems={cartItems}/>}></Route>
+      <Route path='/'  element={<Product product={product} allproduct={allproduct} cartItems={cartItems}/>}></Route>  
+      <Route path='/product'  element={<AddProduct allproduct ={allproduct}/>}></Route>  
       <Route path='/filter/:id' element={<FilterProduct/>}></Route>
-      <Route path='/view/:id' element={<ViewProduct/>}></Route>
+      <Route path='/view/:id' element={<ViewProduct cartItems={cartItems} allproduct={allproduct}/>}></Route>
       <Route path='/updateproduct/:id' element={<UpdateProduct/>}></Route>
       <Route path='/cart' element={<Cart cartitem={cartitem} cartItems={cartItems}/>}></Route>
       <Route path='/order' element={<Order/>}></Route>

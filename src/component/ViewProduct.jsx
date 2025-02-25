@@ -7,7 +7,7 @@ import { message,Popconfirm,Button} from 'antd';
 
 
 
-export const ViewProduct = () => {
+export const ViewProduct = ({cartItems,allproduct}) => {
 
     const baseUrl=import.meta.env.VITE_BASE_URL;
 
@@ -52,6 +52,8 @@ export const ViewProduct = () => {
         await axios.delete(`${baseUrl}/api/product/${productId}`)
         .then((res)=>{
             messageApi.open({ type: 'success', content: "Product Deleted Successfully", className:'mt-11 text-green-500'});
+            allproduct()
+            console.log(typeof allproduct); 
             setTimeout(()=>{
             home('/')
             },2000)
@@ -88,6 +90,7 @@ export const ViewProduct = () => {
         })
         .then((res)=>{
         messageApi.open({ type: 'success', content: "Item Added to cart", className:'mt-11 text-green-500'});
+        cartItems()
         })
         .catch((err)=>{
             console.log(err);    

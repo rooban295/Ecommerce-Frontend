@@ -15,7 +15,7 @@ export const ViewOrder = () => {
     useEffect(()=>{
     fetchOrders()
     },[])
-
+    
     const [messageApi, contextHolder] = message.useMessage();
 
 
@@ -61,7 +61,7 @@ export const ViewOrder = () => {
     
 
   return (
-    <div className={`flex flex-col gap-7 pt-10 px-5 items-center ${orders.length >3 ?'':'h-screen'}`}>
+    <div className={`flex flex-col gap-7 pt-10 px-5 items-center ${orders.length >= 2 ?'':'h-screen'}`}>
 
         {contextHolder}
 

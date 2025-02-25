@@ -16,9 +16,6 @@ import { notification, Popover, Popconfirm , message } from 'antd';
 import { AddProduct } from './AddProduct';
 import { IoIosLogOut } from "react-icons/io";
 import { BsBoxSeam } from "react-icons/bs";
-import { Flex, Transfer , Empty} from 'antd';
-
-
 
 export const Nav = ({cartitem,allproduct}) => {
 
@@ -218,7 +215,7 @@ const hoverContent2 = <div>Add Product</div>;
 
 const addProductContent = 
 <div>
-<AddProduct/>
+<AddProduct allproduct={allproduct}/>
 </div>
 
     

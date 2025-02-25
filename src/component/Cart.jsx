@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { setCartTotal } from '../slices/CartItemTotal';
-import { SlCheck } from "react-icons/sl";
-import { ToastContainer, Zoom, toast } from 'react-toastify';
-import {Button,Form,Input,Select,notification,message} from 'antd';
+import { ToastContainer, Zoom } from 'react-toastify';
+import {message} from 'antd';
 
 
-export const Cart = ({cartitem},{cartItems}) => {
+export const Cart = ({cartitem,cartItems}) => {
 
   const baseUrl=import.meta.env.VITE_BASE_URL;
 
@@ -16,14 +14,7 @@ export const Cart = ({cartitem},{cartItems}) => {
   
   const[cart , setCart]=useState({});
 
-  // const[cartitem,setCartItems]=useState([])
-
-
   const viewNav=useNavigate();
-
-  const cartNav = useNavigate();
-
-  const[deleteMsg,setDeleteMsg]=useState('')
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -31,12 +22,7 @@ export const Cart = ({cartitem},{cartItems}) => {
 
   useEffect(()=>{
     cartPrice()
-    removeCartItem()
   },[])
-
-  // useEffect(()=>{
-  //   cartItemTotal(setCartTotal(cartitem.length))
-  // },[cartitem,jwt,cart])
   
 
   //cart price details
@@ -57,28 +43,6 @@ export const Cart = ({cartitem},{cartItems}) => {
   }
 
 
-// //getting all the item in cart
-//   const cartItems=()=>{
-
-//     if(jwt.message ==='Login successfully'){
-      
-//     axios.get(`${baseUrl}/api/cart/getcartitem`,{
-//       headers:{
-//         Authorization: `Bearer ${jwt.jwt}`
-//       }
-//     })
-//     .then((res)=>{
-//       setCartItems(res.data)
-//       cartItemTotal(setCartTotal(cartitem.length))
-//     })
-//     .catch((err)=>{
-//       console.log(err); 
-//     })
-//   }
-
-//   }
-
-
 
 const handelImg=(productId)=>{
   viewNav(`/view/${productId}`)
@@ -95,10 +59,10 @@ const removeCartItem=(id)=>{
         Authorization: `Bearer ${jwt.jwt}` 
       }
     })
-    .then((res)=>{
+    .then(()=>{
       messageApi.open({type:'success',content:'Item Removed successfully', className:'text-green-500 mt-13'})
       cartPrice()  
-      // cartItems()
+      cartItems()
     })
     .catch((err)=>{
       console.log(err);
@@ -109,16 +73,6 @@ const removeCartItem=(id)=>{
  
 const handelRemoveCartItem=(cartItemId)=>{
   removeCartItem(cartItemId);
-}
-
-const deleteMess=useRef();
-
-const deleteMsgPopup=(msg)=>{
-  setDeleteMsg(msg);
-  deleteMess.current.style.top='20px'
-  setTimeout(()=>{
-    deleteMess.current.style.top='-1000px'
-  },2000)
 }
 
 
@@ -134,8 +88,9 @@ const updateCart=(c)=>{
       Authorization: `Bearer ${jwt.jwt}` 
     }
   })
-  .then((res)=>{
+  .then(()=>{
     cartPrice();
+    cartItems();
   })
   .catch((err)=>{
     console.log(err);
@@ -176,10 +131,6 @@ const handelCartPlaceOrder=()=>{
 
       <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/>
       
-
-      <div className='absolute top-[-1000px] left-[25%] p-1 bg-slate-300 rounded-lg duration-75' ref={deleteMess} >
-        <p className=''>{deleteMsg}<SlCheck className='inline text-green-400 h-5 w-5'/></p>
-      </div>
       
       <div className='flex flex-col items-center md:items-start md:flex-row  justify-between gap-5 pt-5 pb-5 h-full'>
 
