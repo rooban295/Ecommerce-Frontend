@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 import {Button,Form,Input,Select,InputNumber, Popover ,message } from 'antd';
 
-export const UpdateProduct = () => {
+export const UpdateProduct = ({allproduct}) => {
   
   const baseUrl=import.meta.env.VITE_BASE_URL;
   
@@ -57,6 +57,7 @@ export const UpdateProduct = () => {
             messageApi.open({type: 'success',className:'mt-13 text-green-500', content: 'Product Updated Successfully',} );
             setTimeout(()=>{
                 // home('/')
+                allproduct()
             },2000)    
         })
         .catch((err)=>{

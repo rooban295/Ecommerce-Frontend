@@ -92,7 +92,7 @@ const cartItems = async ()=>{
       <Route path='/product'  element={<AddProduct allproduct ={allproduct}/>}></Route>  
       <Route path='/filter/:id' element={<FilterProduct/>}></Route>
       <Route path='/view/:id' element={<ViewProduct cartItems={cartItems} allproduct={allproduct}/>}></Route>
-      <Route path='/updateproduct/:id' element={<UpdateProduct/>}></Route>
+      <Route path='/updateproduct/:id' element={<UpdateProduct allproduct ={allproduct}/>}></Route>
       <Route path='/cart' element={<Cart cartitem={cartitem} cartItems={cartItems}/>}></Route>
       <Route path='/order' element={<Order/>}></Route>
       <Route path='/vieworder' element={<ViewOrder/>}></Route>

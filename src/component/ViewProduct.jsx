@@ -53,7 +53,6 @@ export const ViewProduct = ({cartItems,allproduct}) => {
         .then((res)=>{
             messageApi.open({ type: 'success', content: "Product Deleted Successfully", className:'mt-11 text-green-500'});
             allproduct()
-            console.log(typeof allproduct); 
             setTimeout(()=>{
             home('/')
             },2000)
