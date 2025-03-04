@@ -97,8 +97,8 @@ const cartItems = async ()=>{
       <Route path='/order' element={<Order/>}></Route>
       <Route path='/vieworder' element={<ViewOrder/>}></Route>
       <Route path='/category' element={<Category/>}></Route>
-      <Route path='/search' element={<SearchProduct/>}></Route>
-      <Route path='/bannerproduct' element={<BannerProduct/>}></Route>
+      <Route path='/search' element={<SearchProduct cartItems={cartItems}/>}></Route>
+      <Route path='/bannerproduct' element={<BannerProduct cartItems={cartItems}/>}></Route>
       <Route path='/orderresult' element={<OrderResult/>}></Route>
     </Routes>
     <Footer/>

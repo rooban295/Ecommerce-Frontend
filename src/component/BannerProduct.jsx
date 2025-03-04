@@ -6,7 +6,7 @@ import { ToastContainer, Zoom, toast } from 'react-toastify';
 import { Space, Table, Button, Popover,message,Popconfirm ,Form,Input,Select } from 'antd';
 
 
-export const BannerProduct = () => {
+export const BannerProduct = ({cartItems}) => {
   const baseUrl=import.meta.env.VITE_BASE_URL;
 
     const jwt = useSelector((state)=>state.jwt.jwtToken)
@@ -74,6 +74,7 @@ export const BannerProduct = () => {
         })
         .then((res)=>{
             messageApi.open({ type: 'success', content: 'Item Added to Cart',className:'mt-11 text-green-500'});
+            cartItems();
         })
         .catch((err)=>{
             console.log(err);

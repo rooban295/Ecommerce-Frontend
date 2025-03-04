@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Button,message} from 'antd';
 
-export const SearchProduct = () => {
+export const SearchProduct = ({cartItems}) => {
 
   const baseUrl=import.meta.env.VITE_BASE_URL;
 
@@ -45,7 +45,8 @@ const addToCart=(cartitems)=>{
   })
   .then((res)=>{
     messageApi.open({type: 'success',className:'mt-13 text-green-500', content: 'Product Added to Cart',} );
-    // cartNav('/cart')   
+    // cartNav('/cart')
+    cartItems();   
   })
   .catch((err)=>{
       console.log(err); 
