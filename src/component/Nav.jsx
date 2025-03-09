@@ -220,7 +220,7 @@ const addProductContent =
 
     
   return (
-    <div className='sticky top-0 z-50'>
+    <div className='sticky top-0 z-50 font-[Poppins]'>
         {contextHolder}
         <nav className='flex justify-between px-3 md:px-10 xl:px-20 items-center py-3 bg-white shadow-sm'>  {/**max-md:hidden max-lg:px-1 */}
 

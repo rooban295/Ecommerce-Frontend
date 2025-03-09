@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, Zoom } from 'react-toastify';
 import {message} from 'antd';
+import { Button, Empty, Typography } from 'antd';
 
 
 export const Cart = ({cartitem,cartItems}) => {
@@ -139,7 +140,7 @@ const handelCartPlaceOrder=()=>{
         <h1 className='text-center text-2xl'>Cart Item</h1>
         {/* working */}
         {
-          cartitem.map((item,index)=>(    
+          cartitem.length > 0? cartitem.map((item,index)=>(    
 
             <div className='flex gap-8 md:gap-10 rounded-md  shadow-md hover:shadow-xl' key={index}>
 
@@ -167,6 +168,14 @@ const handelCartPlaceOrder=()=>{
               </div>
             </div>
           ))
+          :
+          <Empty className='!mt-20 !h-[500px]' 
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+           description={
+            <Typography.Text>
+              Cart is Empty <a onClick={()=>viewNav('/')}>Buy Now</a>
+            </Typography.Text>
+          }/>
         }
 
       </div>

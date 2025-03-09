@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { message,Popconfirm,Button} from 'antd';
+import { message,Popconfirm,Button,Empty, Typography,Result} from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export const ViewOrder = () => {
 
@@ -17,6 +18,8 @@ export const ViewOrder = () => {
     },[])
     
     const [messageApi, contextHolder] = message.useMessage();
+
+    const nav =useNavigate();
 
 
     const fetchOrders=()=>{
@@ -68,7 +71,7 @@ export const ViewOrder = () => {
         {/* <ToastContainer position={'top-center'} closeButton={false} hideProgressBar={true} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} transition={Zoom} toastStyle={{backgroundColor:'#45556c  ',color:'white'}}/> */}
 
         <h1 className='text-center text-xl'>Order</h1>
-        {orders.map((order) =>
+        {orders.length > 0 ? orders.map((order) =>
         order.orderItem.map((prod,index) => (
             <div className='flex justify-center sm:w-[90%] gap-2 md:gap-10 bg-white shadow-2xl p-2 rounded-md' key={index}>
             <img src={prod.product.productImg} alt='google drive img loading' className='h-15 w-15 '/>
@@ -87,7 +90,11 @@ export const ViewOrder = () => {
             </Popconfirm>
             </div>
         ))
-    )}
+    )
+    :
+    <Result status="404" title="Your Order is Empty" extra={<Button onClick={()=>nav('/')} type="primary">Buy Now</Button>}/>
+
+}
     </div>
   )
 }

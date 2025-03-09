@@ -6,6 +6,9 @@ import { setJwtToken } from '../slices/JwtSlices';
 import { setAdmin } from '../slices/Admin';
 import { ToastContainer, Zoom } from 'react-toastify';
 import {Button,Form,Input,Select,notification,message,Popover,QRCode} from 'antd';
+import spo from '/public/assets/image/spo.png'
+import bg from '/public/assets/image/bg.png'
+import ai from '/public/assets/image/ai.png'
 
 
 export const Login = () => {
@@ -131,9 +134,18 @@ const tailFormItemLayout = {
       });
     };
 
+    const handelGuestButton=()=>{
+
+      const log={
+        "userName":"guest@gmail.com",
+        "password":"123456"
+    }
+      loginApi(log)
+    }
+
 
   return (
-    <div className=''>
+    <div className='relative h-screen overflow-y-hidden'>
         <div className='h-screen w-screen relative bg-gradient-to-r bg-slate-100 '> {/**from-slate-700 to-slate-400 */}
   
         {contextHolder2}
@@ -153,8 +165,7 @@ const tailFormItemLayout = {
         {
 
         loginfrom ?
-   
-        <Form  {...formItemLayout} form={forms} name="register" onFinish={onLogin}  className='outline-none flex flex-col rounded-lg absolute top-[25%] left-[8%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'
+        <Form  {...formItemLayout} form={forms} name="register" onFinish={onLogin}  className='outline-none flex flex-col rounded-lg absolute z-500 top-[25%] left-[8%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%]  w-[320px] md:w-[400px] p-5 items-center shadow-2xl'
         initialValues={{
           residence: ['zhejiang', 'hangzhou', 'xihu'],
           prefix: '86',
@@ -165,7 +176,7 @@ const tailFormItemLayout = {
         }}
         scrollToFirstError
       >
-        <p className='text-slate-900 text-3xl animate-bounce  my-10'>Hey, Welcome back </p>
+        <p className='text-slate-600 text-3xl font-[lato]  my-6'>Hey, Welcome back </p>
 
         <Form.Item
           name="userName"
@@ -198,8 +209,8 @@ const tailFormItemLayout = {
         <Input.Password placeholder='Enter Your Password' className='!placeholder-slate-500 !text-slate-800 !text-md !w-[300px] !bg-slate-100 h-9'/>
         </Form.Item>
   
-        <Form.Item className='w-full '> 
-          <button onClick={handelSignInButton} className=' text-slate-500 pl-5 lg:pl-14 cursor-pointer hover:text-slate-700'>Register account</button>
+        <Form.Item className='w-full'> 
+          <button onClick={handelSignInButton} className=' text-slate-500 pl-5 lg:pl-14 cursor-pointer hover:text-slate-600'>Register account</button>
         </Form.Item>
   
         <Form.Item {...tailFormItemLayout}>
@@ -207,15 +218,20 @@ const tailFormItemLayout = {
             Login
           </Button>
         </Form.Item>
-  
+
+        <p onClick={()=>handelGuestButton()} className='my-1 text-slate-500 cursor-pointer text-[13px] hover:text-slate-700'><span className='inline-block mr-1 text-slate-900'>Don’t have an account? </span><span className='text-blue-500 hover:text-blue-700'>Continue as Guest</span></p>
+
+      <img src={spo} className='absolute opacity-30 -z-100' alt="" />
       </Form>
+
+
 
         :
     <div className='rounded-xl absolute top-[20%] left-[8%] sm:left-[20%] md:left-[30%] lg:left-[35%] xl:left-[40%] w-[320px] md:w-[400px]  shadow-2xl'>
 
-    <p className='text-slate-900 pt-10 text-3xl animate-bounce text-center mb-5'>Create Account</p>
+    <p className='text-slate-500 pt-10 text-3xl text-center mb-5 font-[lato]'>Create Account</p>
   
-    <Form className='flex flex-col items-center' {...formItemLayout} form={form} name="register" onFinish={onFinish}
+    <Form className='flex flex-col items-center relative z-100 !bg-transparent' {...formItemLayout} form={form} name="register" onFinish={onFinish}
       initialValues={{
         residence: ['zhejiang', 'hangzhou', 'xihu'],
         prefix: '86',
@@ -324,7 +340,7 @@ const tailFormItemLayout = {
           Register
         </Button>
       </Form.Item>
-
+      <img src={ai} className='absolute -top-10 opacity-75 -z-100' alt="" />
     </Form>
     </div>
         }    

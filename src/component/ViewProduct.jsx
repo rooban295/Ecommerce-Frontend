@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { message,Popconfirm,Button} from 'antd';
+import { Rate } from 'antd';
 
 
 
@@ -106,7 +107,7 @@ export const ViewProduct = ({cartItems,allproduct}) => {
     
 
   return (
-    <div  className={`relative sm:h-screen`}>
+    <div  className={`relative sm:h-screen font-[lato]`}>
 
         {contextHolder}
        
@@ -119,6 +120,7 @@ export const ViewProduct = ({cartItems,allproduct}) => {
                <div className='text-xl flex flex-col gap-5 p-3'>
                <h1 className='text-xl'><span className=''></span>{product.productName}</h1>
                <p className='text-sm'>{product.description}</p>
+               <Rate disabled defaultValue={3} />
                <p><span className='font-bold'>price </span> ₹{product.productPrice}</p>
 
 

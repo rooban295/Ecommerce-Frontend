@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Button,message} from 'antd';
+import { Rate } from 'antd';
+
 
 export const SearchProduct = ({cartItems}) => {
 
@@ -56,7 +58,7 @@ const addToCart=(cartitems)=>{
 
   
   return (
-    <div className={`px-6 md:px-20 ${searchProduct.length > 0 ?'':'h-screen'}`}>
+    <div className={`px-6 md:px-20 font-[lato] ${searchProduct.length > 0 ?'':'h-screen'}`}>
 
       {contextHolder}
 
@@ -74,6 +76,7 @@ const addToCart=(cartitems)=>{
                     <div className='flex flex-col gap-2 sm:gap-5 items-start '>
                     <h1 className='text-slate-700'>{item.productName}</h1>
                     <p className='text-justify'>{item.description}</p>
+                    <Rate disabled defaultValue={3} />
                     <h1 className='font-bold'><span>₹</span>{item.productPrice}</h1>
                     <Button type="primary" className='my-5' onClick={()=>{handelCartButton(item.id)}}>Add to Cart</Button>
                     </div>

@@ -12,7 +12,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useNavigate } from 'react-router-dom';
-
+import { FaArrowUp } from "react-icons/fa6";
 export const FilterProduct = () => {
     
     const baseUrl=import.meta.env.VITE_BASE_URL;
@@ -56,11 +56,30 @@ export const FilterProduct = () => {
     bannerProduct("/bannerproduct")
   }
 
+   const [isVisible, setIsVisible] = useState(false);
+      
+        useEffect(() => {
+          const toggleVisibility = () => {
+            if (window.scrollY > 200) {
+              setIsVisible(true);
+            } else {
+              setIsVisible(false);
+            }
+          };
+      
+          window.addEventListener("scroll", toggleVisibility);
+          return () => window.removeEventListener("scroll", toggleVisibility);
+        }, []);
+      
+        const scrollToTop = () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
   
   return (
-    <div className=''>
+    <div className='font-[lato]'>
       
-            <div className='flex justify-evenly flex-wrap shadow-2xl rounded-lg bg-white py-3 mt-1 inset-shadow-sm'>
+            <div className='flex justify-evenly gap-5 shadow-2xl rounded-lg bg-white py-3 mt-1 inset-shadow-sm  overflow-x-scroll no-scrollbar'>
             {
                 category.map((item,index)=>(
                     <div className='cursor-pointer flex flex-col gap-2' onClick={()=>handelBanner(item.id)} key={item.id}>
@@ -98,6 +117,18 @@ export const FilterProduct = () => {
     ) : null
   )}
 </Swiper>
+
+
+{
+                isVisible && (
+                    <button
+                      className="fixed bottom-5 right-5 md:bottom-7 md:right-18 p-3 rounded-full bg-white shadow shadow-blue-700  z-200 cursor-pointer transition-opacity duration-300"
+                      onClick={scrollToTop}
+                    >
+                      <FaArrowUp className="text-blue-600" />
+                    </button>
+                  )
+            }
 
     </div>
   )

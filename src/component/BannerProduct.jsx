@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
-import { Space, Table, Button, Popover,message,Popconfirm ,Form,Input,Select } from 'antd';
+import { Space, Table, Button, Popover,message,Popconfirm ,Form,Input,Select ,Rate} from 'antd';
+import { FaArrowUp } from "react-icons/fa6";
 
 
 export const BannerProduct = ({cartItems}) => {
@@ -98,8 +99,30 @@ export const BannerProduct = ({cartItems}) => {
 
     }
     },[categoryId])
+
+
+
+    const [isVisible, setIsVisible] = useState(false);
+    
+      useEffect(() => {
+        const toggleVisibility = () => {
+          if (window.scrollY > 200) {
+            setIsVisible(true);
+          } else {
+            setIsVisible(false);
+          }
+        };
+    
+        window.addEventListener("scroll", toggleVisibility);
+        return () => window.removeEventListener("scroll", toggleVisibility);
+      }, []);
+    
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+
   return (
-    <div className={`px-4 md:px-20 ${product.length ?'':'h-screen'}`}>
+    <div className={`px-4 md:px-20 font-[lato] ${product.length ?'':'h-screen'}`}>
 
 
         {contextHolder}
@@ -128,6 +151,7 @@ export const BannerProduct = ({cartItems}) => {
                         <div className='flex flex-col gap-2 sm:gap-5 items-start '>
                         <h1 className='text-slate-700'>{item.productName}</h1>
                         <p className='text-justify'>{item.description}</p>
+                        <Rate disabled defaultValue={3} />
                         <h1 className='font-bold'><span>₹</span>{item.productPrice}</h1>
                         {/* <button  className=' bg-slate-400 rounded-lg p-1 px-3 my-5 hover:bg-slate-?600' onClick={()=>{handelCartButton(item.id)}}>Add to cart</button> */}
                         <Button type="primary" className='my-5' onClick={()=>{handelCartButton(item.id)}}>Add to Cart</Button>
@@ -138,6 +162,17 @@ export const BannerProduct = ({cartItems}) => {
             }
             
         </div>
+
+        {
+                isVisible && (
+                    <button
+                      className="fixed bottom-5 right-5 md:bottom-7 md:right-18 p-3 rounded-full bg-white shadow shadow-blue-700  z-200 cursor-pointer transition-opacity duration-300"
+                      onClick={scrollToTop}
+                    >
+                      <FaArrowUp className="text-blue-600" />
+                    </button>
+                  )
+            }
     
         </div>
   )
