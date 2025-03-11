@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import { Button,message} from 'antd';
+import { Button,message,Result} from 'antd';
 import { Rate } from 'antd';
+import { FaArrowUp } from "react-icons/fa6";
+
 
 
 export const SearchProduct = ({cartItems}) => {
@@ -56,14 +58,36 @@ const addToCart=(cartitems)=>{
 }
 }
 
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 200) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   
   return (
-    <div className={`px-6 md:px-20 font-[lato] ${searchProduct.length > 0 ?'':'h-screen'}`}>
+    <div className={`px-6 md:px-20 relative font-[lato] ${searchProduct.length > 0 ?'':'h-screen'}`}>
 
       {contextHolder}
 
     <h1 className="text-3xl text-center pt-10">Search Result</h1>
-        
+
+    {
+    searchProduct.length > 0 ?
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-20'>
         {
             searchProduct.map((item,index)=>(
@@ -86,6 +110,26 @@ const addToCart=(cartitems)=>{
         }
         
     </div>
+    :
+    <>
+    <div className='flex justify-center items-center !w-full '>
+        <Result className='' status="404" title="search result not found"  extra={<Button onClick={()=>navigate('/')} type="primary">Back Home</Button>}/>
+    </div>
+    </>
+
+      }
+
+    {
+            isVisible && (
+                <button
+                  className="fixed bottom-5 right-5 md:bottom-7 md:right-18 p-3 rounded-full bg-white shadow shadow-blue-700  z-200 cursor-pointer transition-opacity duration-300"
+                  onClick={scrollToTop}
+                >
+                  <FaArrowUp className="text-blue-600" />
+                </button>
+              )
+        }
+    
 
     </div>
   )

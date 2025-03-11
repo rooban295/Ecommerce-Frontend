@@ -7,7 +7,7 @@ import { SlCheck } from "react-icons/sl";
 import { CiCreditCard1 } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
 import { IoLocationOutline } from "react-icons/io5";
-import { message} from 'antd';
+import {Button,Form,Input,Select,notification,message,Popover,QRCode} from 'antd';
 
 
 
@@ -276,8 +276,6 @@ const removeOrderItem=(id)=>{
 
   }
 
-  
-
   return (
     <div className=''>
 
@@ -290,7 +288,7 @@ const removeOrderItem=(id)=>{
         <div className='w-full'>
 
         {/* account details */}
-        <div className='rounded bg-white relative p-1 px-5 shadow-2xl'>
+        <div className='rounded  relative p-1 px-5 shadow-2xl'>
         <p className='text-slate-500 inline'>Login</p> <FcApproval className='inline right-5 top-4'/>
         <div className='flex gap-10 mt-1'>
         <MdOutlineAccountCircle className='h-10 w-10 fill-slate-700 mt-1' />
@@ -304,9 +302,9 @@ const removeOrderItem=(id)=>{
 
 
             {/*Address Details  */}
-        <div className='mt-8  bg-slate-100 px-5 rounded shadow-2xl'>
+        <div className='mt-8 bg-white  px-5 rounded shadow-2xl'>
 
-        <p className='text-start inline-block text-slate-800 pt-2'>Delivery Address</p> <IoLocationOutline className={`${address ?"inline":"hidden"} text-slate-800`}/>
+        <p className='text-start inline-block text-slate-800 pt-2 my-3'>Delivery Address</p> <IoLocationOutline className={`${address ?"inline":"hidden"} text-slate-800`}/>
 
         <form onSubmit={handelAddressFrom} className='flex flex-col justify-center items-center  p-2  gap-5'>
             <input type="text" name='city' value={address.city} placeholder='Enter city' className='w-full pl-5 p-1 outline-none ring ring-blue-300 hover:ring-2 rounded ' required onChange={handelAddressEvent}/>
@@ -316,7 +314,7 @@ const removeOrderItem=(id)=>{
             <input type="text"name='country' value={address.country} placeholder='Enter Country' className='w-full pl-5 p-1 outline-none ring ring-blue-300 hover:ring-2 rounded ' required onChange={handelAddressEvent}/>
             <input type="text" name='mobile' value={address.mobile} placeholder='Enter mobile no' className='w-full pl-5 p-1 outline-none ring ring-blue-300 hover:ring-2 rounded ' required onChange={handelAddressEvent}/>
         </form>
-
+        
         </div>
 
 
@@ -368,7 +366,7 @@ const removeOrderItem=(id)=>{
 
       {/* payment method */}
 
-      <section className='bg-slate-100 mt-10 rounded-md p-2'>
+      <section className=' mt-10 rounded-md p-2 shadow-xl'>
 
       <form onSubmit={handelPaymentMode}>
         <h1 className='text-slate-500 pb-4 inline-block'>Payment details</h1> <FcApproval className='inline right-5 top-4'/>
