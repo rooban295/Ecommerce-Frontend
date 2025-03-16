@@ -221,7 +221,7 @@ const tailFormItemLayout = {
 
         <p onClick={()=>handelGuestButton()} className='my-1 text-slate-500 cursor-pointer text-[13px] hover:text-slate-700'><span className='inline-block mr-1 text-slate-900'>Don’t have an account? </span><span className='text-blue-500 hover:text-blue-700'>Continue as Guest</span></p>
 
-      <img src={spo} className='absolute opacity-30 -z-100' alt="" />
+      {/* <img src={spo} className='absolute opacity-30 -z-100' alt="" /> */}
       </Form>
 
 
@@ -340,7 +340,7 @@ const tailFormItemLayout = {
           Register
         </Button>
       </Form.Item>
-      <img src={ai} className='absolute -top-10 opacity-75 -z-100' alt="" />
+      {/* <img src={ai} className='absolute -top-10 opacity-75 -z-100' alt="" /> */}
     </Form>
     </div>
         }    
