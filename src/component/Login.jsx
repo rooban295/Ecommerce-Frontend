@@ -127,7 +127,7 @@ const tailFormItemLayout = {
 
     const openNotification = () => {
       api.open({
-        message: 'Hi, User',
+        message: 'Hello, User',
         description: <><p>To create an account, click on the "Register Account" button and fill in the required details, such as your name, email, and password. Make sure to use a valid email, as you may need to verify it. Choose a strong password for security. Once you submit the form, click on "Login".</p> 
          <span className='mt-2 block'> <span className='font-bold'>Note:</span> It may take some time to load the server, so please be patient while the process completes.</span></>,
         duration: 0,
@@ -157,7 +157,7 @@ const tailFormItemLayout = {
         <img className='object-fill' src="https://res.cloudinary.com/depfu1w0f/image/upload/v1740230755/Logo_jhvjoj.png" alt="" />
         </div>
         </Popover>
-        <a className='text-sm text-slate-500' onClick={openNotification}>Need Help ?</a>
+        <a className='text-sm text-slate-500 cursor-pointer' onClick={openNotification}>Need Help ?</a>
         </nav>
 
         <ToastContainer position={'top-center'} closeOnClick={true} autoClose={1500} pauseOnHover={true} draggable={true} closeButton={false} hideProgressBar={true} transition={Zoom} toastStyle={{backgroundColor:'#314158',color:'white'}}/>

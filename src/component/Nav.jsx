@@ -189,13 +189,13 @@ export const Nav = ({cartitem,allproduct}) => {
   <p>{userinfo.fullName}</p>
   <p className='my-2'>{userinfo.email}</p>
   <p className='my-2'>{userinfo.role}</p>
-  <p className='my-2 hover:text-sky-500' onClick={()=>viewOrder('/vieworder')}>Orders <BsBoxSeam className='inline h-4 w-4 ml-3'/></p>
+  <p className='my-2 hover:text-sky-500 cursor-pointer' onClick={()=>viewOrder('/vieworder')}>Orders <BsBoxSeam className='inline h-4 w-4 ml-3'/></p>
   <Popconfirm placement="left" title="Logout" description="Are you sure to do want to Logout"
   onConfirm={()=>handleLogout()}
   onCancel={cancel}
   okText="Yes"
   cancelText="No">
-  <p className='my-2 hover:text-sky-500'>Logout <IoIosLogOut className='inline h-5 w-5  ml-3'/></p>
+  <p className='my-2 hover:text-sky-500 cursor-pointer'>Logout <IoIosLogOut className='inline h-5 w-5  ml-3'/></p>
 </Popconfirm>
 </div>
 
@@ -217,6 +217,15 @@ const addProductContent =
 <div>
 <AddProduct allproduct={allproduct}/>
 </div>
+
+
+
+const handleEnter = (event) => {
+  if (event.key === "Enter") {
+      event.preventDefault(); // Prevents default behavior (like form submission)
+      handelSearchList();
+  }
+};
 
     
   return (
@@ -241,8 +250,8 @@ const addProductContent =
                 <div>
                 <div className='flex relative'>
                 <div className="relative hover:after:block after:rounded-xl after:hidden after:h-[2px] after:w-full after:bg-sky-400 after:absolute after:right-0 after:top-10">
-                <input onChange={handelSearch} value={keyword}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-blue-200 bg-slate-100 border-none hover:ring-2 pl-5 rounded-md p-1 w-[250px] sm:w-[300px] md:w-[350px] lg:w-[650px] xl:w-[1000px]'  placeholder='Search Product'/>
-                </div>
+                <input onChange={handelSearch} value={keyword} onKeyDown={handleEnter}  type="text" onBlur={()=>{setTimeout(()=>{setDropDownSearch(false)},200)}} className='relative outline-none ring ring-blue-200 bg-slate-100 border-none hover:ring-2 pl-5 rounded-md p-1 w-[250px] sm:w-[300px] md:w-[350px] lg:w-[650px] xl:w-[1000px]'  placeholder='Search Product'/>
+                </div> {/**search input */}
                 <IoSearchOutline className='h-6 w-7 hover:h-7 hover:w-7 cursor-pointer  absolute right-2 top-1 hover:text-sky-500 ' onClick={handelSearchList}/>
                 </div>
                 {
@@ -369,10 +378,7 @@ const addProductContent =
             </div>
 
            <div className={`absolute top-9 left-9  ${accNotification ? 'block':'hidden'}`}> {/**  Account Notification*/}
-            {/* <span className="relative flex size-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-900 opacity-75"></span>
-                <span className="relative inline-flex size-3 rounded-full bg-sky-700"></span>
-                </span> */}
+          
             </div>
 
 
